@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "seed": "npx tsx scripts/seed.ts"
   },
   "dependencies": {
     "@codemirror/lang-javascript": "^6.2.5",
