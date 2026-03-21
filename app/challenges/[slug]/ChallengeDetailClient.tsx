@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { useProgress } from '@/context/ProgressContext'
 import { CodeChallenge } from '@/components/challenges/CodeChallenge'
 import { ScenarioChallenge } from '@/components/challenges/ScenarioChallenge'
-import { SignUpPrompt } from '@/components/ui/SignUpPrompt'
 import { ALL_CHALLENGES } from '@/lib/challenges'
 import { SKILL_AREAS } from '@/lib/skills'
 import type { Challenge, CodeContent, ScenarioContent } from '@/lib/types'
@@ -301,7 +300,6 @@ export function ChallengeDetailClient({ challenge }: { challenge: Challenge }) {
       )}
 
       <div style={{ height: '64px' }} />
-      <SignUpPrompt showAfterCompletion={isCompleted} />
     </div>
   )
 }
