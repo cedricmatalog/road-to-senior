@@ -26,6 +26,10 @@ export async function runCode(
   userCode: string,
   testCases: Array<{ description: string; testCode: string }>
 ): Promise<{ results: TestResult[]; compileError: string | null; runtimeError: string | null }> {
+  if (!process.env.JUDGE0_API_KEY) {
+    throw new Error('JUDGE0_API_KEY environment variable is not set')
+  }
+
   const source_code = buildSubmissionCode(userCode, testCases)
 
   const res = await fetch('https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=false&wait=true', {
@@ -35,7 +39,8 @@ export async function runCode(
       'X-RapidAPI-Key': process.env.JUDGE0_API_KEY!,
       'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com',
     },
-    body: JSON.stringify({ source_code, language_id: 63, stdin: '' }),
+    body: JSON.stringify({ source_code, language_id: 63, // Node.js 12
+stdin: '' }),
     signal: AbortSignal.timeout(10_000),
   })
 
