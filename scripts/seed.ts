@@ -18,13 +18,15 @@ async function seed() {
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   )
 
-  const { error } = await supabase
-    .from('challenges')
-    .upsert(challenges, { onConflict: 'slug' })
+  for (const challenge of challenges) {
+    const { error } = await supabase
+      .from('challenges')
+      .upsert(challenge, { onConflict: 'slug' })
 
-  if (error) {
-    console.error('Seed failed:', error)
-    process.exit(1)
+    if (error) {
+      console.error(`Seed failed for challenge "${challenge.slug}":`, error)
+      process.exit(1)
+    }
   }
 
   console.log(`Seeded ${challenges.length} challenges.`)
