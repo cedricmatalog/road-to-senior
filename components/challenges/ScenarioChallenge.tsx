@@ -29,7 +29,6 @@ export function ScenarioChallenge({ content, onComplete }: ScenarioChallengeProp
         {content.options.map(option => {
           const isSelected = selectedId === option.id
           const isAnswered = selectedId !== null
-          const isRecommended = option.isRecommended
 
           return (
             <button
@@ -37,8 +36,8 @@ export function ScenarioChallenge({ content, onComplete }: ScenarioChallengeProp
               onClick={() => handleSelect(option.id)}
               disabled={isAnswered && !isSelected}
               className={`w-full text-left rounded-lg border p-4 transition-colors
-                ${isAnswered && isSelected && isRecommended ? 'border-green-500 bg-green-50' : ''}
-                ${isAnswered && isSelected && !isRecommended ? 'border-red-400 bg-red-50' : ''}
+                ${isAnswered && isSelected && option.isRecommended ? 'border-green-500 bg-green-50' : ''}
+                ${isAnswered && isSelected && !option.isRecommended ? 'border-red-400 bg-red-50' : ''}
                 ${!isAnswered ? 'border-gray-200 hover:border-blue-400 hover:bg-blue-50' : ''}
                 ${isAnswered && !isSelected ? 'opacity-40 cursor-default' : 'cursor-pointer'}
               `}

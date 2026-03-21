@@ -35,4 +35,11 @@ describe('ScenarioChallenge', () => {
     fireEvent.click(screen.getByText('Give specific inline comments'))
     expect(onComplete).toHaveBeenCalledOnce()
   })
+
+  it('shows wrong answer feedback when non-recommended option is selected', () => {
+    render(<ScenarioChallenge content={content} onComplete={vi.fn()} />)
+    fireEvent.click(screen.getByText('Approve and fix yourself'))
+    expect(screen.getByText(/Misses teaching moment/)).toBeInTheDocument()
+    expect(screen.getByText(/Worth reconsidering/)).toBeInTheDocument()
+  })
 })
