@@ -13,6 +13,11 @@ describe('SkillCard', () => {
     expect(screen.getByTestId('skill-card')).toHaveAttribute('data-gap', 'true')
   })
 
+  it('shows gap indicator when coverage is exactly 0.3', () => {
+    render(<SkillCard label="Async JS" coverage={0.3} slug="async-js" />)
+    expect(screen.getByTestId('skill-card')).toHaveAttribute('data-gap', 'true')
+  })
+
   it('does not show gap indicator when coverage > 0.3', () => {
     render(<SkillCard label="Async JS" coverage={0.5} slug="async-js" />)
     expect(screen.getByTestId('skill-card')).toHaveAttribute('data-gap', 'false')

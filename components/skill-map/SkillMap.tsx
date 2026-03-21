@@ -10,12 +10,13 @@ interface SkillMapProps {
 
 export function SkillMap({ challenges }: SkillMapProps) {
   const { completed } = useProgress()
+  const completedSet = new Set(completed)
 
   function coverageFor(slug: string): number {
-    const total = challenges.filter(c => c.skills.includes(slug)).length
-    if (total === 0) return 0
-    const done = challenges.filter(c => c.skills.includes(slug) && completed.includes(c.slug)).length
-    return done / total
+    const relevant = challenges.filter(c => c.skills.includes(slug))
+    if (relevant.length === 0) return 0
+    const done = relevant.filter(c => completedSet.has(c.slug)).length
+    return done / relevant.length
   }
 
   const technical = SKILL_SLUGS.filter(s => SKILL_AREAS[s].category === 'technical')

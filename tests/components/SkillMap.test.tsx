@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect, vi } from 'vitest'
 import { SkillMap } from '@/components/skill-map/SkillMap'
+import { SKILL_SLUGS } from '@/lib/skills'
 
 vi.mock('@/context/ProgressContext', () => ({
   useProgress: () => ({ completed: ['async-promise-chain'], markComplete: vi.fn() }),
@@ -17,6 +18,7 @@ describe('SkillMap', () => {
     render(<SkillMap challenges={mockChallenges as any} />)
     expect(screen.getByText('Async JS')).toBeInTheDocument()
     expect(screen.getByText('Closures & Scope')).toBeInTheDocument()
+    expect(screen.getAllByTestId('skill-card').length).toBe(SKILL_SLUGS.length)
   })
 
   it('shows gap for skills with 0 completion', () => {
