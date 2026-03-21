@@ -5,6 +5,7 @@ export default async function SkillMapPage() {
   const { data, error } = await supabase.from('challenges').select('slug, skills')
 
   if (error) {
+    console.error('Failed to load challenges for skill map:', error)
     return (
       <main className="max-w-4xl mx-auto px-4 py-8">
         <p className="text-red-600">Failed to load skill map. Please refresh.</p>
