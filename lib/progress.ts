@@ -7,7 +7,11 @@ export function loadProgress(): StoredProgress {
   try {
     const raw = localStorage.getItem(KEY)
     if (!raw) return structuredClone(DEFAULT)
-    return JSON.parse(raw) as StoredProgress
+    const parsed = JSON.parse(raw)
+    return {
+      version: 1,
+      completed: Array.isArray(parsed?.completed) ? parsed.completed : [],
+    }
   } catch {
     return structuredClone(DEFAULT)
   }
