@@ -16,6 +16,7 @@ export function ChallengeFilters() {
   return (
     <div className="flex flex-wrap gap-3 mb-6">
       <select
+        aria-label="Filter by skill"
         value={params.get('skill') ?? ''}
         onChange={e => update('skill', e.target.value)}
         className="border border-gray-300 rounded-lg px-3 py-1.5 text-sm"
@@ -27,6 +28,7 @@ export function ChallengeFilters() {
       </select>
 
       <select
+        aria-label="Filter by type"
         value={params.get('type') ?? ''}
         onChange={e => update('type', e.target.value)}
         className="border border-gray-300 rounded-lg px-3 py-1.5 text-sm"
@@ -37,6 +39,7 @@ export function ChallengeFilters() {
       </select>
 
       <select
+        aria-label="Filter by difficulty level"
         value={params.get('difficulty') ?? ''}
         onChange={e => update('difficulty', e.target.value)}
         className="border border-gray-300 rounded-lg px-3 py-1.5 text-sm"

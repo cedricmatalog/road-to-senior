@@ -7,7 +7,7 @@ export function ChallengeCard({ challenge }: { challenge: Challenge }) {
     junior: 'bg-green-100 text-green-700',
     mid: 'bg-yellow-100 text-yellow-700',
     senior: 'bg-red-100 text-red-700',
-  }[challenge.difficulty]
+  }[challenge.difficulty] ?? 'bg-gray-100 text-gray-600'
 
   return (
     <Link href={`/challenges/${challenge.slug}`} className="block border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow bg-white">

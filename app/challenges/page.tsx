@@ -1,9 +1,10 @@
-export const dynamic = 'force-dynamic'
-
+import { Suspense } from 'react'
 import { supabase } from '@/lib/supabase'
 import { ChallengeCard } from '@/components/challenges/ChallengeCard'
 import { ChallengeFilters } from '@/components/challenges/ChallengeFilters'
 import type { Challenge } from '@/lib/types'
+
+export const dynamic = 'force-dynamic'
 
 interface PageProps {
   searchParams: { skill?: string; type?: string; difficulty?: string }
@@ -31,7 +32,9 @@ export default async function ChallengesPage({ searchParams }: PageProps) {
   return (
     <main className="max-w-4xl mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold text-gray-900 mb-6">Challenges</h1>
-      <ChallengeFilters />
+      <Suspense fallback={null}>
+        <ChallengeFilters />
+      </Suspense>
       {challenges.length === 0 ? (
         <p className="text-gray-500">No challenges match these filters.</p>
       ) : (
