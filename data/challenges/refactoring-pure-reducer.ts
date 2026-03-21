@@ -10,8 +10,8 @@ const challenge: Challenge = {
   content: {
     overview: `A reducer is a pure function: \`(state, action) => newState\`. It never mutates the input — it returns a new state object. This makes state changes predictable, loggable, and testable. It's the pattern behind Redux, React's useReducer, and Elm.`,
     starterCode: `// Implement todoReducer(state, action) — a pure function with no side effects.
-// Actions: ADD { text }, TOGGLE { id }, DELETE { id }
-// State shape: array of { id, text, completed }
+// Actions: ADD { text }, TOGGLE { id }, REMOVE { id }
+// State shape: { items: [{ id, text, done }] }
 
 function todoReducer(state, action) {
   // your code here

@@ -3,12 +3,12 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'closures-counter',
   title: 'Build a Counter with Closures',
-  description: 'Implement a counter factory using closures — no classes allowed.',
+  description: 'Build a counter factory — the same pattern used for request trackers, retry budgets, and rate limit counters.',
   type: 'code',
   difficulty: 'junior',
   skills: ['closures-scope'],
   content: {
-    overview: `A closure lets a function "remember" variables from its enclosing scope after that scope has exited. Each call to \`makeCounter\` creates a fresh, independent \`count\` — the returned methods close over it.`,
+    overview: `Closures let a function "remember" variables from its enclosing scope after that scope has exited. This is how you build stateful utilities without classes — request counters, retry budgets, and in-memory rate limiters all use this pattern. Each call to \`makeCounter\` creates a fresh, independent \`count\`, so two counters never interfere with each other.`,
     solution: `function makeCounter(start = 0) {
   let count = start
   return {

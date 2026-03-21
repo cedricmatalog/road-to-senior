@@ -3,12 +3,12 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'js-immutability-basics',
   title: 'Update State Without Mutation',
-  description: 'Transform objects and arrays without mutating the originals.',
+  description: 'A React component isn\'t re-rendering after state updates. The cause: the state object is being mutated directly instead of replaced.',
   type: 'code',
   difficulty: 'junior',
   skills: ['javascript'],
   content: {
-    overview: 'Mutating objects directly causes bugs in React state, Redux reducers, and anywhere you need to compare old and new values. Spread syntax and array methods like map/filter return new references.',
+    overview: 'Directly mutating an object or array is one of the most common React bugs: `user.name = "Alice"` doesn\'t trigger a re-render because the reference hasn\'t changed. React, Redux, and any system that tracks changes by reference comparison requires you to return new objects and arrays. Spread syntax and array methods like `filter` and `map` always return new references without touching the original.',
     starterCode: `// updateUser(user, changes) should return a NEW object with changes applied.
 // The original user object must not be modified.
 // addTag(tags, newTag) should return a NEW array with newTag appended.

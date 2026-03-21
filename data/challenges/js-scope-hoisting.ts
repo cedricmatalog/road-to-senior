@@ -3,12 +3,12 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'js-scope-hoisting',
   title: 'var vs let — Loop Variables',
-  description: 'Fix a classic var-in-loop bug using let.',
+  description: 'A bug report comes in: clicking any item in a dynamically built list always shows "item 3" instead of the item you clicked. The cause is a classic var-in-loop mistake.',
   type: 'code',
   difficulty: 'junior',
   skills: ['javascript'],
   content: {
-    overview: 'var is function-scoped and hoisted — the same variable is shared across all loop iterations. let is block-scoped — each iteration gets its own binding. This is one of the most common interview questions and a real source of bugs.',
+    overview: 'This is one of the most common real bugs in JavaScript UIs. When you create event listeners inside a loop using var, every listener closes over the same variable — by the time any of them fire, the loop has already finished and the variable holds its final value. Switching to let gives each iteration its own binding, so each listener captures a different value.',
     starterCode: `// This function should return an array of functions.
 // Each function, when called, should return its index (0, 1, 2).
 // But with var, they all return 3. Fix it using let.
@@ -32,7 +32,7 @@ function makeCounters() {
       'let is block-scoped — each iteration of the loop gets its own copy of i.',
       'You only need to change one word in the starter code.',
     ],
-    explanation: 'With var, there is one i shared by all closures — by the time any of the functions run, i is 3. With let, each loop iteration creates a new i binding captured independently by each closure. This is why let was introduced: to fix this exact class of bugs.',
+    explanation: 'With var, there is one i shared by all closures — by the time any click handler fires, the loop has finished and i is 3. With let, each loop iteration creates a new i binding captured independently by each closure. This is why "always use let, never var in loops" is standard practice. The same bug appears in any loop that creates callbacks: event listeners, setTimeout calls, or promise chains.',
     testCases: [
       {
         description: 'first function returns 0',

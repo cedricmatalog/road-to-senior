@@ -3,12 +3,12 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'async-promise-all-settled',
   title: 'Implement Promise.allSettled',
-  description: 'Implement `allSettled(promises)` — resolves when all promises settle, returning an array of `{ status, value/reason }` objects regardless of failures.',
+  description: 'Your dashboard fetches data from 3 third-party APIs in parallel. One is flaky. You want to show whatever succeeded — not blank the whole page because one failed.',
   type: 'code',
   difficulty: 'mid',
   skills: ['async-js', 'promises-concurrency'],
   content: {
-    overview: `Unlike \`Promise.all\` which rejects on first failure, \`allSettled\` always resolves with the outcome of every promise. Essential when you need results from all operations even if some fail — like fetching data from multiple sources in parallel.`,
+    overview: `\`Promise.all\` fails fast — one rejection cancels everything. But sometimes you need all results, successful or not, so you can show partial data, log what failed, and retry only the failures. That's \`allSettled\`: it always resolves with every outcome, so you can decide what to do with each one.`,
     starterCode: `// allSettled(promises) should return a Promise resolving to an array
 // of result objects regardless of success or failure.
 // { status: 'fulfilled', value } or { status: 'rejected', reason }

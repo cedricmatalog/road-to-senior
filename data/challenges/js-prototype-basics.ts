@@ -3,12 +3,12 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'js-prototype-basics',
   title: 'Implement a Simple Linked List',
-  description: 'Build a linked list node class with append and toArray methods.',
+  description: 'Build a linked list — the same pointer-based structure used inside browser history, undo stacks, and task queues.',
   type: 'code',
   difficulty: 'junior',
   skills: ['javascript'],
   content: {
-    overview: 'Linked lists are rarely used in JavaScript directly, but implementing one teaches you class syntax, prototype methods, and pointer-based thinking. These patterns appear in trees, queues, and LRU caches.',
+    overview: 'Linked lists show up in real systems more than you\'d expect: browser history (each page links to the previous), undo/redo stacks, LRU caches, and scheduler queues. Implementing one teaches you class syntax, prototype methods, and pointer-based thinking — the same mental model you need to understand trees and other linked structures.',
     starterCode: `// Implement a LinkedList class with:
 // - constructor(value) — creates a node with the value
 // - append(value) — adds a node to the end of the list

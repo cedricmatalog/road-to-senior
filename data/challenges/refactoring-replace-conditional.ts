@@ -3,12 +3,12 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'refactoring-replace-conditional',
   title: 'Replace Conditionals with a Lookup Table',
-  description: 'Refactor a long if/else chain that maps status codes to messages into a cleaner data-driven approach.',
+  description: 'An API error handler has grown to 7 if/else branches. Every time a new status code is added, someone has to touch the logic. Refactor it.',
   type: 'code',
   difficulty: 'junior',
   skills: ['refactoring'],
   content: {
-    overview: `Long if/else chains that map one value to another are a code smell — they're verbose, hard to extend, and obscure the data. A lookup object (or Map) replaces branching logic with a data structure. Adding a new case is one line, not three.`,
+    overview: `Long if/else chains that map one value to another are a code smell you'll encounter constantly — error message maps, action handlers, display names for enums. They're hard to extend and bury data inside logic. A lookup object replaces branching with a data structure: adding a new status code is one line in an object, not three lines of if/else.`,
     starterCode: `// Replace the if/else chain with a lookup table.
 // getStatusMessage(code) returns the message for the HTTP status code,
 // or 'Unknown' for unrecognised codes.
@@ -36,7 +36,7 @@ function getStatusMessage(code) {
 function getStatusMessage(code) {
   return STATUS_MESSAGES[code] ?? 'Unknown Status'
 }`,
-    explanation: `The lookup table separates data from logic — the object is data (what maps to what), \`getStatusMessage\` is logic (how to look up). This makes the code easier to read, extend (add a new status with one line), and test. The \`??\` (nullish coalescing) handles unknown codes gracefully. The same pattern applies to any "translate X to Y" branching — action handlers, error messages, display names for enum values.`,
+    explanation: `The lookup table separates data from logic — the object holds what maps to what, the function handles how to look it up. Adding a new HTTP status is now one line in the object, not three lines of if/else. The \`??\` (nullish coalescing) handles unknown codes gracefully. This same pattern applies everywhere you're translating one value to another: Redux action type strings to handlers, error codes to user-facing messages, feature flag names to config values.`,
     hints: [
       'Define the mappings as an object literal: `{ 200: "OK", 404: "Not Found", ... }`.',
       'The function body becomes a single line: look up the code in the object.',

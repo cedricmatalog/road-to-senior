@@ -9,7 +9,7 @@ const challenge: Challenge = {
   skills: ['system-design', 'performance'],
   content: {
     overview: 'Always optimise in place before reaching for a new system. PostgreSQL full-text search handles millions of records well. Elasticsearch is powerful but operationally expensive — earn it.',
-    situation: `Your e-commerce app has 1M+ products. Users can search by name, description, and tags. Currently you're using PostgreSQL with ILIKE queries — they're taking 2-5 seconds on large searches. You need sub-100ms search. The data changes ~5,000 times per day (new products, price updates). You have 2 engineers and about 2 weeks. What's your approach?`,
+    situation: `Your e-commerce app has 1M+ products. Users can search by name, description, and tags. Currently you're using PostgreSQL with ILIKE queries — they're taking 2-5 seconds on large searches. You need noticeably faster search. The data changes ~5,000 times per day (new products, price updates). You have 2 engineers and about 2 weeks. What's your approach?`,
     options: [
       {
         id: 'a',

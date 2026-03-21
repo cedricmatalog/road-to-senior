@@ -23,23 +23,19 @@ function isApiResponse(value) {
   return typeof value === 'string'
 }
 
-function isUser(value) {
+function isApiResponse(value) {
   return (
     typeof value === 'object' &&
     value !== null &&
-    typeof value.id === 'number' &&
-    typeof value.name === 'string'
+    typeof value.status === 'number' &&
+    typeof value.data === 'string'
   )
-}
-
-function isArrayOf(arr, guard) {
-  return Array.isArray(arr) && arr.every(guard)
 }`,
-    explanation: `Type guards bridge runtime checks and compile-time types. \`isUser\` checks the shape of an unknown value — never assume an API response matches your type. Importantly, always check \`value !== null\` before accessing properties (\`typeof null === 'object'\` is a famous JavaScript footgun). \`isArrayOf\` is a higher-order guard — it applies a guard to every element, useful for typed arrays from API responses.`,
+    explanation: `Type guards bridge runtime checks and compile-time types. \`isApiResponse\` checks the shape of an unknown value — never assume an API response matches your type. Importantly, always check \`value !== null\` before accessing properties (\`typeof null === 'object'\` is a famous JavaScript footgun). The pattern is the same for any shape: check it's an object, not null, then check each expected property with typeof.`,
     hints: [
       'isString: just typeof value === "string".',
-      'isUser: check typeof value === "object", value !== null, then check each expected property with typeof.',
-      'isArrayOf: Array.isArray() first, then arr.every(item => guard(item)).',
+      'isApiResponse: check typeof value === "object" && value !== null first — then check each property.',
+      'Check typeof value.status === "number" and typeof value.data === "string".',
     ],
     testCases: [
       {
@@ -51,25 +47,27 @@ if (isString('hello') && !isString(42) && !isString(null)) { console.log("PASS")
 else { console.log("FAIL") }`,
       },
       {
-        description: 'isUser validates object shape',
-        explanation: 'Must return true only for objects with numeric id and string name — and not null.',
+        description: 'isApiResponse validates object shape',
+        explanation: 'Must return true only for objects with a numeric status and string data — and not null.',
         testCode: `
-function isUser(value) {
+function isApiResponse(value) {
   return typeof value === 'object' && value !== null &&
-    typeof value.id === 'number' && typeof value.name === 'string'
+    typeof value.status === 'number' && typeof value.data === 'string'
 }
-const valid = { id: 1, name: 'Alice' }
-const invalid = { id: '1', name: 'Alice' }
-if (isUser(valid) && !isUser(invalid) && !isUser(null)) { console.log("PASS") }
+const valid = { status: 200, data: 'ok' }
+const invalid = { status: '200', data: 'ok' }
+if (isApiResponse(valid) && !isApiResponse(invalid) && !isApiResponse(null)) { console.log("PASS") }
 else { console.log("FAIL") }`,
       },
       {
-        description: 'isArrayOf validates every element',
-        explanation: 'Returns true only if every element passes the guard — false if any element fails.',
+        description: 'isApiResponse rejects missing fields',
+        explanation: 'Partial objects that are missing status or data should return false.',
         testCode: `
-function isString(value) { return typeof value === 'string' }
-function isArrayOf(arr, guard) { return Array.isArray(arr) && arr.every(guard) }
-if (isArrayOf(['a', 'b'], isString) && !isArrayOf(['a', 1], isString)) { console.log("PASS") }
+function isApiResponse(value) {
+  return typeof value === 'object' && value !== null &&
+    typeof value.status === 'number' && typeof value.data === 'string'
+}
+if (!isApiResponse({ status: 200 }) && !isApiResponse({ data: 'ok' }) && !isApiResponse({})) { console.log("PASS") }
 else { console.log("FAIL") }`,
       },
     ],

@@ -51,6 +51,15 @@ safeFetch('/api/user').then(({ data, error }) => {
   if (!data && error) { console.log("PASS") } else { console.log("FAIL: should have error for 404") }
 })`,
       },
+      {
+        description: 'returns error on invalid JSON',
+        explanation: 'res.json() can throw if the server returns malformed JSON (e.g., an HTML error page). Must be caught separately.',
+        testCode: `
+global.fetch = () => Promise.resolve({ ok: true, json: () => Promise.reject(new SyntaxError('Unexpected token')) })
+safeFetch('/api/user').then(({ data, error }) => {
+  if (!data && error) { console.log("PASS") } else { console.log("FAIL: should have error for invalid JSON") }
+})`,
+      },
     ],
   },
 }

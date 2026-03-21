@@ -3,12 +3,12 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'async-serial-execution',
   title: 'Execute Async Tasks Serially',
-  description: 'Implement `runSerial(tasks)` — runs an array of async functions one after another, passing the result of each to the next.',
+  description: 'Your DB migration runner must apply migrations in exact order — running them in parallel would corrupt state. Each step must complete before the next starts.',
   type: 'code',
   difficulty: 'mid',
   skills: ['async-js', 'promises-concurrency'],
   content: {
-    overview: `Sometimes you need async operations to run in strict sequence — each waiting for the previous to finish before starting. This is the async equivalent of a reduce, and it's how database migration runners and build pipelines work.`,
+    overview: `Some operations can't be parallelised: database migrations, ordered build steps, sequential API calls where each depends on the previous result. Running them with \`Promise.all\` starts everything at once and breaks ordering guarantees. A serial runner awaits each task before starting the next, passing the result through like a pipeline.`,
     starterCode: `// runSerial(tasks) runs an array of async tasks one at a time (not in parallel).
 // Each task is a function that returns a Promise.
 // Return the result of the last task.
@@ -56,6 +56,14 @@ const tasks = [
 ]
 runSerial(tasks).then(result => {
   if (result === 25) { console.log("PASS") } else { console.log("FAIL: got " + result) }
+})`,
+      },
+      {
+        description: 'handles empty array',
+        explanation: 'An empty task list should resolve with undefined — not throw.',
+        testCode: `
+runSerial([]).then(result => {
+  if (result === undefined) { console.log("PASS") } else { console.log("FAIL: got " + result) }
 })`,
       },
     ],

@@ -3,12 +3,12 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'closures-partial-application',
   title: 'Implement Partial Application',
-  description: 'Implement `partial(fn, ...presetArgs)` — returns a new function with some arguments pre-filled.',
+  description: 'You have a generic `log(level, service, message)` function. Every call in the payments module repeats the same level and service. Pre-fill them once instead of every call.',
   type: 'code',
   difficulty: 'mid',
   skills: ['closures-scope'],
   content: {
-    overview: `Partial application fixes some arguments of a function and returns a new function that accepts the rest. It's a form of function specialization that reduces repetition and enables composition.`,
+    overview: `When you find yourself passing the same arguments to a function over and over, partial application lets you pre-fill them once and get back a specialised function. It's how you create \`logError\` from \`log\`, \`fetchFromAPI\` from \`fetchWithAuth\`, or \`formatUSD\` from a generic formatter — same logic, less repetition.`,
     starterCode: `// partial(fn, ...presetArgs) returns a new function that calls fn
 // with presetArgs prepended to any later arguments.
 

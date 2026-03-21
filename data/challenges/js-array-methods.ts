@@ -3,12 +3,12 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'js-array-methods',
   title: 'Array Transformation Pipeline',
-  description: 'Use map, filter, and reduce to process a list of orders.',
+  description: 'Use filter and reduce to compute the total revenue from completed orders.',
   type: 'code',
   difficulty: 'junior',
   skills: ['javascript'],
   content: {
-    overview: 'map, filter, and reduce are the foundation of data transformation in JavaScript. Chain them to express complex logic clearly without loops.',
+    overview: 'filter and reduce are the foundation of data transformation in JavaScript. Chain them to express complex logic clearly without loops — filter selects, reduce aggregates.',
     starterCode: `// Given an array of orders, return the total revenue
 // from orders that are 'completed' only.
 // Each order has: { id, status, amount }

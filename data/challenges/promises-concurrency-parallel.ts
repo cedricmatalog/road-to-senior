@@ -3,12 +3,12 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'promises-concurrency-parallel',
   title: 'Run Promises in Parallel with Concurrency Limit',
-  description: 'Implement a function that runs async tasks in parallel but limits how many can run at once.',
+  description: 'You need to process 500 S3 uploads. Running them all at once crashes the service. Running them one-by-one takes forever. You need a concurrency limit.',
   type: 'code',
   difficulty: 'senior',
   skills: ['promises-concurrency', 'async-js'],
   content: {
-    overview: `Running tasks serially is too slow; running all at once overwhelms the server. A concurrency limit lets you saturate available capacity without overloading it — the "worker pool" pattern that underpins database connection pools, HTTP request batching, and build tools.`,
+    overview: `Running all tasks at once — \`Promise.all(tasks.map(t => t()))\` — saturates connections, triggers rate limits, and overwhelms downstream services. Running serially is too slow. A concurrency limit keeps N tasks running at all times: when one finishes, the next starts. This is the worker pool pattern behind database connection pools, HTTP request batching, CI job runners, and build tools.`,
     solution: `async function runWithConcurrency(tasks, limit) {
   const results = new Array(tasks.length)
   let index = 0

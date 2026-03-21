@@ -3,12 +3,12 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'closures-once',
   title: 'Implement a Once Function',
-  description: 'Implement `once(fn)` — returns a function that calls `fn` only on the first invocation and returns the same result on all subsequent calls.',
+  description: 'Implement `once(fn)` — used to ensure initialization code (DB connections, config loads, analytics setup) runs exactly once no matter how many times it\'s called.',
   type: 'code',
   difficulty: 'junior',
   skills: ['closures-scope'],
   content: {
-    overview: `A classic closure pattern: store state (whether the function has been called, and its result) in the enclosing scope. The returned wrapper checks and updates that state on each call.`,
+    overview: `You often need to guarantee that something runs exactly once: connecting to a database, loading a config file, firing an analytics event on first render. \`once\` wraps any function so that only the first call executes it — subsequent calls return the cached result. The pattern uses a closure to store two things: a flag (has it been called?) and the result (what did it return?).`,
     starterCode: `// once(fn) returns a new function that calls fn only the first time.
 // Subsequent calls return the first result without calling fn again.
 
@@ -26,7 +26,7 @@ function once(fn) {
     return result
   }
 }`,
-    explanation: `The closure captures two variables: \`called\` (a flag) and \`result\` (the cached return value). On first call, \`called\` flips to \`true\` and \`result\` is stored. All subsequent calls skip the function and return the cached result. This pattern is used for lazy initialization, one-time setup functions, and preventing duplicate side effects.`,
+    explanation: `The closure captures two variables: \`called\` (a flag) and \`result\` (the cached return value). On first call, \`called\` flips to \`true\` and \`result\` is stored. All subsequent calls skip the function and return the cached result. In production, this pattern prevents duplicate DB connections, redundant API calls on page load, and analytics double-fires. Lodash's \`_.once\` is exactly this implementation.`,
     hints: [
       'You need two variables in the closure: a flag to track whether fn has been called, and a place to store the result.',
       'On first call: set the flag, call fn, store the result. On all subsequent calls: skip fn and return the stored result.',

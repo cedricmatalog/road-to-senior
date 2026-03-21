@@ -3,12 +3,12 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'testing-boundary-cases',
   title: 'Handle Edge Cases in a Validator',
-  description: 'Implement `validateAge(age)` that correctly handles all boundary and edge cases a good test suite would catch.',
+  description: 'You\'re building a sign-up form. Implement `validateAge(age)` that guards against every bad input a real user — or attacker — might submit.',
   type: 'code',
   difficulty: 'junior',
   skills: ['testing', 'error-handling'],
   content: {
-    overview: `Good testing reveals edge cases you didn't consider. This challenge flips it: given the test cases, implement the function. Boundaries — zero, negatives, floats, non-numbers — are where most bugs hide.`,
+    overview: `User input is untrusted. A real sign-up form will receive negative numbers, floats, strings, NaN from a broken frontend, and Infinity from a crafted request. Boundaries — zero, negatives, floats, non-numbers — are where most validation bugs hide. This challenge flips the usual approach: the test cases tell you what edge cases you need to handle.`,
     starterCode: `// validateAge(age) returns { valid: true } or { valid: false, error: string }.
 // Valid age: a finite number between 0 and 150 (inclusive).
 
@@ -30,7 +30,7 @@ function validateAge(age) {
   }
   return { valid: true, error: null }
 }`,
-    explanation: `Boundary testing reveals implicit assumptions. \`Number.isFinite\` catches NaN and Infinity (both typeof "number"). \`Number.isInteger\` catches floats. Checking > 150 catches obviously wrong values. The order matters — check type before using arithmetic on the value. Each error message should describe *what's wrong*, not just "invalid input".`,
+    explanation: `Input validation on a real form needs to handle what browsers and HTTP clients actually send. \`Number.isFinite\` catches NaN and Infinity — both have typeof "number", so a simple typeof check misses them. \`Number.isInteger\` catches floats from decimal inputs. The order matters: check type before using arithmetic on the value. Each error message should say *what's wrong*, not just "invalid" — both for users and for debugging bad API calls.`,
     hints: [
       'Check typeof first — strings, null, and undefined will slip through arithmetic comparisons.',
       'Number.isFinite() rejects NaN and Infinity. Number.isInteger() rejects floats.',

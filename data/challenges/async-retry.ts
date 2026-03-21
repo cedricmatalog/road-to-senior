@@ -3,12 +3,12 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'async-retry',
   title: 'Implement Async Retry with Backoff',
-  description: 'Implement a `retry` function that retries a failing async operation up to N times with exponential backoff between attempts.',
+  description: 'Your service calls a third-party payment API that times out ~15% of the time. Retrying immediately just gets another timeout. You need retries that back off.',
   type: 'code',
   difficulty: 'senior',
   skills: ['async-js', 'error-handling'],
   content: {
-    overview: `Transient failures are unavoidable in distributed systems. Retry with exponential backoff gives a failing service time to recover without hammering it — each attempt waits twice as long as the last. Used in every production HTTP client, queue consumer, and database connection pool.`,
+    overview: `Transient failures — network blips, rate limits, cold starts — are unavoidable in distributed systems. Retrying immediately after a failure often just triggers the same failure again. Exponential backoff doubles the wait between each attempt, giving the failing service time to recover. This pattern is in every production HTTP client, queue consumer, and database connection pool.`,
     solution: `async function retry(fn, { times = 3, baseDelay = 100 } = {}) {
   for (let attempt = 0; attempt < times; attempt++) {
     try {

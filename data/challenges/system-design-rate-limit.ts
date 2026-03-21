@@ -13,8 +13,8 @@ const challenge: Challenge = {
     options: [
       {
         id: 'a',
-        label: 'Use a sliding window counter in Redis with a TTL key per client IP',
-        explanation: 'This is the right call for a 2-hour window. Redis INCR with EXPIRE gives you an atomic, fast, persistent counter per client. Sliding window is more accurate than fixed window (no burst at boundary). A good library like `rate-limiter-flexible` wraps this pattern and saves you from edge cases.',
+        label: 'Use a fixed window counter in Redis with INCR and EXPIRE per client IP',
+        explanation: 'This is the right call for a 2-hour window. Redis INCR with EXPIRE gives you an atomic, fast, persistent counter per client — that\'s the fixed window algorithm (reset every N seconds). It\'s simple, fast, and handles the 10k/min abuse case well. The downside is burst traffic at window boundaries, but for emergency rate limiting that tradeoff is fine. A library like `rate-limiter-flexible` wraps this and offers sliding window if you need it later.',
         isRecommended: true,
       },
       {
