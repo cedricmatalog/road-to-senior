@@ -27,6 +27,14 @@
   --text-sm:   14px;
   --text-base: 18px;
   --text-lg:   28px;
+
+  /* Layout — mobile first */
+  --page-px:   16px;
+  --page-max:  1100px;
+}
+
+@media (min-width: 640px) {
+  :root { --page-px: 24px; }
 }
 
 * { box-sizing: border-box; }

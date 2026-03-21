@@ -42,7 +42,7 @@ function SkillBar({ skillSlug, label, completed }: { skillSlug: string; label: s
   const isComplete = done === total && total > 0
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '140px 1fr 48px', alignItems: 'center', gap: '12px' }}>
+    <div className="skill-bar-row">
       <span style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: isComplete ? 'var(--accent)' : 'var(--text-dim)', letterSpacing: '0.04em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
         {isComplete ? '✓ ' : ''}{label}
       </span>
@@ -75,17 +75,51 @@ export default function ProgressPage() {
   const recentChallenges = recentSlugs.map(slug => ALL_CHALLENGES.find(c => c.slug === slug)).filter(Boolean)
 
   return (
-    <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 24px' }}>
-      <div style={{ padding: '48px 0 32px', borderBottom: '1px solid var(--border)', marginBottom: '40px' }}>
+    <main style={{ maxWidth: 'var(--page-max)', margin: '0 auto', padding: '0 var(--page-px)' }}>
+      <style>{`
+        .progress-row:hover { background: var(--bg-raised) !important; }
+        .progress-overview {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 28px;
+          align-items: center;
+          margin-bottom: 40px;
+          padding: 24px;
+          background: var(--surface);
+          border: 1px solid var(--border);
+        }
+        @media (min-width: 640px) {
+          .progress-overview { gap: 40px; margin-bottom: 48px; padding: 32px; }
+        }
+        .skills-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 32px;
+          margin-bottom: 40px;
+        }
+        @media (min-width: 640px) {
+          .skills-grid { grid-template-columns: 1fr 1fr; margin-bottom: 48px; }
+        }
+        .skill-bar-row {
+          display: grid;
+          grid-template-columns: 1fr 60px 36px;
+          align-items: center;
+          gap: 10px;
+        }
+        @media (min-width: 400px) {
+          .skill-bar-row { grid-template-columns: 130px 1fr 36px; }
+        }
+      `}</style>
+      <div style={{ padding: '32px 0 24px', borderBottom: '1px solid var(--border)', marginBottom: '28px' }}>
         <p style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: 'var(--accent)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '8px' }}>Your Journey</p>
-        <h1 style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-lg)', fontWeight: 500, color: 'var(--text)', margin: '0 0 8px', letterSpacing: '-0.02em' }}>Progress</h1>
+        <h1 style={{ fontFamily: 'var(--mono)', fontSize: 'clamp(24px, 6vw, 48px)', fontWeight: 500, color: 'var(--text)', margin: '0 0 8px', letterSpacing: '-0.02em', lineHeight: 1 }}>Progress</h1>
         <p style={{ fontFamily: 'var(--sans)', fontSize: 'var(--text-sm)', color: 'var(--text-dim)', margin: 0 }}>
           Track your road to senior engineer.
         </p>
       </div>
 
       {/* Overall score */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px', alignItems: 'center', marginBottom: '48px', padding: '32px', background: 'var(--surface)', border: '1px solid var(--border)' }}>
+      <div className="progress-overview">
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', position: 'relative', flexShrink: 0 }}>
           <RadialScore pct={pct} size={140} />
           <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' }}>
@@ -130,7 +164,7 @@ export default function ProgressPage() {
       </div>
 
       {/* Skills breakdown */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px', marginBottom: '48px' }}>
+      <div className="skills-grid">
         <div>
           <h2 style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: 'var(--accent)', letterSpacing: '0.12em', textTransform: 'uppercase', margin: '0 0 20px' }}>
             Technical Skills
@@ -191,10 +225,6 @@ export default function ProgressPage() {
           </Link>
         </div>
       )}
-
-      <style>{`
-        .progress-row:hover { background: var(--bg-raised) !important; }
-      `}</style>
 
       <div style={{ height: '64px' }} />
     </main>

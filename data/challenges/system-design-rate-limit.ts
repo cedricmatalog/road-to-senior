@@ -2,31 +2,31 @@ import type { Challenge } from '@/lib/types'
 
 const challenge: Challenge = {
   slug: 'system-design-rate-limit',
-  title: 'Design a Simple Rate Limiter',
-  description: 'Your API is being hammered by a single client. How do you design a basic rate limiter?',
+  title: 'Prevent API Hammering from the Frontend',
+  description: 'Your search input fires an API call on every keystroke, generating hundreds of requests per minute. How do you fix this?',
   type: 'scenario',
   difficulty: 'senior',
   skills: ['system-design', 'architecture'],
   content: {
-    overview: 'Rate limiting is an infrastructure concern, not an application concern. Use the right tool — a shared, atomic counter in Redis — and avoid in-memory solutions that break when you scale.',
-    situation: `A single client is making 10,000 requests per minute to your REST API, causing slow responses for everyone else. You need to add rate limiting. Your stack is Node.js with Redis available. You need to ship something in 2 hours. What approach do you take?`,
+    overview: 'Client-side request control is about matching user intent to API calls. Debounce waits for the user to stop typing. Throttle limits rate. Request cancellation ensures you only process the latest response.',
+    situation: `You have a search input that calls \`GET /api/search?q=...\` on every keystroke. A fast typist generates 10 requests per second. The server is getting hammered, responses arrive out of order (an earlier slow response overwrites a later fast one), and the UI flickers. You need to fix all three problems. What's your approach?`,
     options: [
       {
         id: 'a',
-        label: 'Use a fixed window counter in Redis with INCR and EXPIRE per client IP',
-        explanation: 'This is the right call for a 2-hour window. Redis INCR with EXPIRE gives you an atomic, fast, persistent counter per client — that\'s the fixed window algorithm (reset every N seconds). It\'s simple, fast, and handles the 10k/min abuse case well. The downside is burst traffic at window boundaries, but for emergency rate limiting that tradeoff is fine. A library like `rate-limiter-flexible` wraps this and offers sliding window if you need it later.',
+        label: 'Debounce the input (300ms), cancel in-flight requests with AbortController when a new keystroke comes in',
+        explanation: 'Debounce solves the hammering: wait until the user stops typing for 300ms before firing. AbortController solves the race condition: cancel the previous fetch when a new one starts, so stale responses never overwrite fresh ones. Together these are the standard pattern for search inputs. The flicker goes away because you\'re no longer rendering intermediate out-of-order responses. With React Query or SWR, this is a few lines — they handle cancellation and deduplication automatically.',
         isRecommended: true,
       },
       {
         id: 'b',
-        label: 'Implement an in-memory token bucket per client in the Node.js process',
-        explanation: "Works for a single server, but breaks immediately when you scale to multiple instances — each server has its own bucket. Since Redis is available, use it.",
+        label: 'Throttle requests to one per second using setInterval to batch keystrokes',
+        explanation: 'Throttle limits rate but doesn\'t solve the race condition — a slow response from second 1 can still overwrite the result from second 2. It also feels laggy: the user stops typing and waits up to 1 second. Debounce (fires after user stops) feels more responsive for search than throttle (fires on a fixed interval).',
         isRecommended: false,
       },
       {
         id: 'c',
-        label: 'Block the offending IP at the infrastructure level (firewall/load balancer)',
-        explanation: "Reasonable as an emergency measure, but it's not a rate limiter — it's a ban. Real rate limiting should allow legitimate traffic below the threshold and be configurable per client, not a blunt block.",
+        label: 'Add a minimum query length (3 chars) and a "Search" button — don\'t search on every keystroke',
+        explanation: 'Minimum length reduces requests and is a reasonable UX guardrail (single-char searches are rarely useful). But requiring a button click removes the "instant search" experience and doesn\'t fix the race condition if users still type quickly. The debounce + cancel approach gives you both instant-feel and safety.',
         isRecommended: false,
       },
     ],

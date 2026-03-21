@@ -2,31 +2,31 @@ import type { Challenge } from '@/lib/types'
 
 const challenge: Challenge = {
   slug: 'system-design-database-schema',
-  title: 'Design a Notifications Schema',
-  description: 'Design a database schema to support user notifications — in-app, email, and push — with read/unread state and preferences.',
+  title: 'Model Frontend State for a Notification System',
+  description: 'Design the client-side state shape for notifications: in-app, email, push — with read/unread state and user preferences.',
   type: 'scenario',
   difficulty: 'senior',
   skills: ['system-design', 'architecture'],
   content: {
-    overview: 'Good schema design separates concerns: the event (what happened), the delivery (who received it), and the preferences (who wants what). Conflating these creates duplication and query problems.',
-    situation: `You need to design the database schema for a notification system. Requirements: (1) multiple notification types — in-app, email, push, (2) users can have unread/read state per notification, (3) users can opt out of certain notification types per channel, (4) notifications can be bulk-sent to all users of a certain type (e.g. "all admins"). You're using PostgreSQL. How do you model this?`,
+    overview: 'Good state shape separates concerns: the notification content, the per-notification read state, and the user\'s channel preferences. Mixing them together creates duplication and makes updates messy.',
+    situation: `You're building the frontend for a notification system. The API returns notifications and the UI must: (1) show a badge count of unread notifications, (2) let users mark individual notifications as read, (3) show user preferences per notification type per channel (email on/off, push on/off). How do you model the client state?`,
     options: [
       {
         id: 'a',
-        label: 'Separate tables: notifications (template/event), notification_deliveries (per-user instance with read state), and notification_preferences (per-user, per-type, per-channel opt-outs)',
-        explanation: 'This is the right separation of concerns. `notifications` stores the event/content once (not duplicated per user). `notification_deliveries` is the fan-out table — one row per (user, notification) pair with read_at timestamp. `notification_preferences` stores user opt-outs. This scales: bulk-sending to 10k users means 10k rows in deliveries, not copying the notification content 10k times. You can query unread counts cheaply (COUNT WHERE read_at IS NULL). The preferences table makes channel management flexible without coupling it to the notification model.',
+        label: 'Normalize: notifications map (id → notification), readIds Set, preferences map (type → channel → boolean)',
+        explanation: 'Normalized state is the right call. A notifications map keyed by ID makes individual updates (mark as read) O(1) — no array find needed. A separate readIds Set makes the badge count a simple size check and doesn\'t require mutating notification objects. Preferences are separate because they have a different lifecycle (user settings vs. event data). This is the shape Redux Toolkit\'s EntityAdapter encourages, and what React Query\'s cache looks like internally. Updates are surgical: one key changes, not the whole array.',
         isRecommended: true,
       },
       {
         id: 'b',
-        label: 'One notifications table with a user_id column, storing the full notification content per user',
-        explanation: 'This duplicates content for bulk notifications. Sending to 10k users means 10k rows with identical content. Updating the notification body (if a bug is found) requires updating 10k rows. The normalised approach stores content once and references it.',
+        label: 'Store everything in one array: notifications with isRead and preferences embedded per item',
+        explanation: 'An array of objects is the first instinct but creates problems. Marking one notification as read means mapping over the whole array to find and update it — O(n) every time. Embedding preferences per notification duplicates them across every notification of that type. To update a preference you\'d have to update every matching notification. The badge count requires filtering the array on every render.',
         isRecommended: false,
       },
       {
         id: 'c',
-        label: 'Store notifications as a JSON array in the user record for fast reads',
-        explanation: 'JSON arrays in user records are an anti-pattern for notifications — they can\'t be indexed efficiently, making "unread count" queries expensive. They also grow unboundedly in the user record. Querying "all users with unread notifications" becomes a full table scan.',
+        label: 'Keep notifications in a server-sync\'d cache (React Query/SWR) and let the server be the source of truth for read state',
+        explanation: 'Using React Query or SWR for server state is a good pattern — it handles caching, staleness, and background refetching. But marking a notification as read should feel instant (optimistic update), not wait for a round-trip. You still need a local state shape for optimistic read state. The two approaches complement each other: React Query owns the server cache, local state owns the optimistic overlay.',
         isRecommended: false,
       },
     ],

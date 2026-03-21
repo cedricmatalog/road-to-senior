@@ -2,31 +2,31 @@ import type { Challenge } from '@/lib/types'
 
 const challenge: Challenge = {
   slug: 'system-design-api-versioning',
-  title: 'API Versioning Strategy',
-  description: 'You need to make a breaking change to a public API that existing clients depend on. How do you approach versioning?',
+  title: 'Consuming a Breaking API Change',
+  description: 'The API you depend on is shipping a breaking change next week. How do you update the frontend without a big-bang deploy?',
   type: 'scenario',
   difficulty: 'senior',
   skills: ['system-design', 'architecture'],
   content: {
-    overview: 'Breaking changes to public APIs break trust. The right approach is always to run old and new in parallel with a sunset timeline — never silently change what clients depend on.',
-    situation: `Your public REST API's \`/users\` endpoint returns a \`name\` field. You need to split it into \`firstName\` and \`lastName\` — a breaking change. You have ~50 external API consumers (some internal, some third-party). Existing consumers must not break. New consumers should use the improved schema. What's your approach?`,
+    overview: 'When an API you consume changes, the frontend needs a migration strategy — not a flag day. The safest approach is to make the new shape work alongside the old one first, then switch over, then clean up.',
+    situation: `The backend team is renaming a field in the user API: \`user.name\` → \`user.firstName + user.lastName\`. They will run both fields in parallel for 4 weeks, then remove \`name\`. You have a React app with ~20 components that reference \`user.name\`. You need to migrate without breaking anything mid-deploy. What's your approach?`,
     options: [
       {
         id: 'a',
-        label: 'Introduce URL versioning (/v1/users and /v2/users), run both in parallel with a sunset timeline for v1',
-        explanation: 'URL versioning is the most explicit and discoverable approach. /v1/users continues to return `name`. /v2/users returns `firstName` and `lastName`. Communicate a sunset date for v1 (3-6 months is common) so consumers have time to migrate. The parallel operation is the key: never silently break existing clients, always give them a migration path. Alternatively, keep `name` alongside the new fields in the same version (additive change) — but if you must remove `name`, versioning is the clean solution.',
+        label: 'Create a normalizer layer: map the API response to your internal shape in one place, migrate all components to the internal shape, then flip the normalizer to use the new fields when ready',
+        explanation: 'This is the right pattern. A normalizer (a function that transforms the raw API response) is the only place that knows about the external API shape. All 20 components use the internal shape — they never reference raw API fields directly. To migrate: update the normalizer to read `firstName + lastName` (or fall back to `name` during the transition window), then remove the fallback after the old field is removed. This means a 1-line change in 1 file, not 20 components. It also insulates you from future API changes.',
         isRecommended: true,
       },
       {
         id: 'b',
-        label: 'Make the breaking change and send an email to all known consumers with a 2-week heads-up',
-        explanation: 'Two weeks is too short for external consumers, who may have release cycles, approval processes, or resource constraints. And "known consumers" often misses some. Breaking a public API without a parallel version running is a significant trust violation — even with warning.',
+        label: 'Update all 20 components at once in a single PR to read the new fields',
+        explanation: 'A big-bang migration works if you can deploy atomically. But if any component is missed, or if the API switches before your deploy, something breaks. During the 4-week parallel window, you can do this safely — but the normalizer approach is less risky and easier to review: one diff, not 20.',
         isRecommended: false,
       },
       {
         id: 'c',
-        label: 'Add firstName and lastName fields but keep name too — clients can migrate at their own pace',
-        explanation: 'Additive changes (keeping `name` and adding new fields) are the least disruptive option and often the right one. But if the requirement is to eventually remove `name`, this just defers the breaking change. If you need a clean schema long-term, versioning with a sunset is the right path.',
+        label: 'Add a compatibility shim in each component: `const name = user.firstName ? \`${user.firstName} ${user.lastName}\` : user.name`',
+        explanation: 'Spreading compatibility logic across 20 components creates 20 places to remember and clean up. When the old field is removed, you have 20 PRs or one large refactor. The normalizer approach concentrates this in one place. Never spread API-shape knowledge through your component tree.',
         isRecommended: false,
       },
     ],

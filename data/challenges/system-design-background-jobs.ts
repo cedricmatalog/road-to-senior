@@ -2,31 +2,31 @@ import type { Challenge } from '@/lib/types'
 
 const challenge: Challenge = {
   slug: 'system-design-background-jobs',
-  title: 'Design a Background Job System',
-  description: 'Users trigger long-running operations (report generation, email blasts). How do you design the backend to handle this?',
+  title: 'Handle Long-Running Operations in the UI',
+  description: 'Users trigger operations that take 10-30 seconds. The UI freezes or shows a spinner with no feedback. How do you design this?',
   type: 'scenario',
   difficulty: 'senior',
   skills: ['system-design', 'architecture'],
   content: {
-    overview: 'Long-running operations don\'t belong in HTTP request handlers. A job queue decouples request time from operation time — and gives you retries, status tracking, and scalability for free.',
-    situation: `Users can trigger two operations: (1) generate a PDF report (takes 10-30 seconds), (2) send a marketing email to up to 50,000 subscribers (takes minutes). Both are currently done synchronously — users wait for the HTTP response, which often times out. You need to redesign this. You have Node.js, PostgreSQL, and Redis available.`,
+    overview: 'Long-running operations need two things: the UI must stay responsive while they run, and users need meaningful feedback on progress. Optimistic UI + polling (or WebSockets) is the standard pattern.',
+    situation: `Users can trigger a "Generate Report" action that takes 10-30 seconds on the server. Currently, the frontend awaits the fetch() call and shows a spinner. Users frequently navigate away thinking it failed, or the browser times out the connection. You need to redesign the UX. What's your approach?`,
     options: [
       {
         id: 'a',
-        label: 'Move operations to a job queue (BullMQ/Redis). Endpoint enqueues the job and returns a job ID. Client polls or uses WebSockets to get status.',
-        explanation: 'The right architecture for long-running operations. The HTTP endpoint becomes a thin layer: validate the request, create a job record, enqueue to Redis, return { jobId }. Workers process jobs independently. The client polls GET /jobs/:id or subscribes via WebSocket. BullMQ handles retries, concurrency, and priority. The job record in PostgreSQL gives you a durable audit trail of all operations. This decouples HTTP request time from operation time, eliminates timeouts, and lets you scale workers independently.',
+        label: 'Fire-and-forget: POST to start the job, get back a jobId, poll GET /jobs/:id every 2s for status, update the UI progressively',
+        explanation: 'This is the right pattern. The POST returns immediately with a job ID — no waiting. The user can navigate, close a tab, and come back. Polling GET /jobs/:id every 2 seconds gives you real-time-ish updates without WebSocket complexity. The UI shows meaningful states: "queued → processing → done" rather than a frozen spinner. When done, display the result or a link to download the report. Stop polling on completion or error. If the user navigates away, you can resume polling when they return by checking pending jobs on mount.',
         isRecommended: true,
       },
       {
         id: 'b',
-        label: 'Increase the HTTP timeout to 5 minutes and run the operations synchronously in the request handler',
-        explanation: 'Long-lived HTTP connections are fragile — network proxies, load balancers, and mobile clients all have their own timeout limits you can\'t control. The user\'s browser may also timeout or navigate away. Synchronous request handling for multi-minute operations is not a scalable solution.',
+        label: 'Increase the fetch timeout to 60 seconds and show an animated progress bar that fills over time',
+        explanation: 'A fake progress bar is a UX lie — it doesn\'t reflect actual progress. A 60-second fetch blocks the connection and still fails for users on slow connections or who navigate away. Long-lived HTTP connections are fragile. The problem is architectural: synchronous request/response is the wrong model for async work.',
         isRecommended: false,
       },
       {
         id: 'c',
-        label: 'Run the operations in a background thread/async process and return immediately with a "check back later" message',
-        explanation: 'Getting closer, but "check back later" without a job ID or status endpoint is a poor UX. Users have no way to know when it\'s done. The queue-based approach with a job ID gives you everything: immediate response, status polling, error handling, and retries.',
+        label: 'Use a Web Worker to run the operation off the main thread so the UI doesn\'t freeze',
+        explanation: 'Web Workers run JavaScript off the main thread — they\'re great for CPU-intensive client-side work (image processing, large data transforms). But report generation happens on the server, not in the browser. A Web Worker can\'t make the server faster. The UI "freezing" is because of the awaited fetch, not main thread blocking.',
         isRecommended: false,
       },
     ],

@@ -2,31 +2,31 @@ import type { Challenge } from '@/lib/types'
 
 const challenge: Challenge = {
   slug: 'security-auth-jwt',
-  title: 'JWT vs Session Tokens',
-  description: 'You\'re building auth for a new API. Should you use JWTs or server-side sessions? What are the tradeoffs?',
+  title: 'Where to Store Auth Tokens in the Browser',
+  description: 'You\'re adding authentication to a React app. Where do you store the token, and why does it matter?',
   type: 'scenario',
   difficulty: 'senior',
   skills: ['security', 'architecture'],
   content: {
-    overview: 'JWTs are stateless by design — you can\'t invalidate them. When your requirements include immediate revocation (logout, password changes), server-side sessions are the right tool.',
-    situation: `You're building a new API with authentication. Two teammates have different opinions: one wants JWTs (stateless, scales easily), the other wants server-side sessions with Redis (can be invalidated instantly). Your app needs: user logout that actually works immediately, ability to revoke access when a user changes their password, and the API needs to scale to multiple servers. Which do you choose and why?`,
+    overview: 'Token storage in the browser is a security decision, not a convenience decision. localStorage is vulnerable to XSS — any injected script can steal it. HttpOnly cookies are immune to XSS but require CSRF protection. Pick the right tool for your threat model.',
+    situation: `You're building auth for a React SPA. After login, the server returns a JWT. You need to store it client-side so the user stays logged in across page refreshes. A teammate suggests storing it in localStorage for simplicity. Another suggests HttpOnly cookies set by the server. You need to decide. What do you choose and why?`,
     options: [
       {
         id: 'a',
-        label: 'Server-side sessions with Redis — given the requirement for immediate revocation, stateless JWTs are fundamentally wrong for this use case',
-        explanation: 'JWTs are stateless by design — you can\'t "unissue" a JWT until it expires. If a user logs out or changes their password, their old JWT is still valid until expiry (typically 15min-24h). For an app that requires instant revocation, this is a security hole. Server-side sessions with Redis solve this: logout deletes the session, and the next request gets a 401. Redis solves the multi-server problem — all servers share the session store. The "JWTs scale better" argument is mostly irrelevant at typical scale — Redis handles millions of session lookups per second. Use JWTs for stateless, non-revocable tokens (short-lived API tokens between microservices). Use sessions for user auth that requires revocation.',
+        label: 'HttpOnly cookies set by the server — they cannot be accessed by JavaScript, eliminating XSS token theft',
+        explanation: 'HttpOnly cookies are the right default for auth tokens. JavaScript cannot read them — `document.cookie` won\'t see them. This means even if an attacker injects a script into your page via XSS, they cannot steal the token. The browser sends them automatically on requests to the same origin. You\'ll need CSRF protection (SameSite=Lax or a CSRF token) since cookies are sent automatically. This is the approach used by most auth providers (NextAuth, Auth0 sessions). The tradeoff: more complex server-side setup, and you need to handle cross-origin requests carefully.',
         isRecommended: true,
       },
       {
         id: 'b',
-        label: 'JWTs with short expiry (15 minutes) and refresh tokens — close enough to instant revocation',
-        explanation: 'This is a reasonable compromise but 15 minutes of residual access after password change or logout is still a real security risk. The complexity of the refresh token flow also often gets implemented incorrectly, creating new vulnerabilities. If immediate revocation is a hard requirement, sessions are the right choice.',
+        label: 'localStorage — it\'s simpler, persists across tabs, and is easy to clear on logout',
+        explanation: 'localStorage is convenient but insecure for auth tokens. Any JavaScript running on your page — including third-party scripts, ad networks, or injected code via XSS — can read it with `localStorage.getItem(\'token\')`. XSS is the most common web vulnerability. Storing your auth token in localStorage turns every XSS bug into a full account takeover.',
         isRecommended: false,
       },
       {
         id: 'c',
-        label: 'JWTs with a Redis blocklist for revoked tokens — best of both worlds',
-        explanation: 'A JWT blocklist works but you\'ve essentially built session management anyway — you\'re checking Redis on every request, storing token state in Redis, and managing expiry. At that point, you have the complexity of JWTs plus the infrastructure of sessions. Just use sessions.',
+        label: 'In-memory (React state or a module variable) — not persistent, but immune to both XSS token theft and CSRF',
+        explanation: 'In-memory storage is the most secure option — no persistence means no storage to attack. But it means users are logged out on every page refresh, which is poor UX for most apps. A common hybrid: store a short-lived access token in memory, store a long-lived refresh token in an HttpOnly cookie. On refresh, silently exchange the cookie for a new access token. This pattern (used by Auth0\'s SPA SDK) gives you security without forcing users to log in constantly.',
         isRecommended: false,
       },
     ],

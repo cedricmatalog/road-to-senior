@@ -2,31 +2,31 @@ import type { Challenge } from '@/lib/types'
 
 const challenge: Challenge = {
   slug: 'system-design-caching-strategy',
-  title: 'Choose a Caching Strategy',
-  description: 'Your product page is slow. The data rarely changes. How do you cache it?',
+  title: 'Choose a Client-Side Caching Strategy',
+  description: 'Your product page re-fetches data on every navigation. The data rarely changes. How do you cache it?',
   type: 'scenario',
   difficulty: 'senior',
   skills: ['system-design', 'performance'],
   content: {
-    overview: 'The best cache is one that\'s both fast and safe to be slightly stale. A short TTL plus explicit invalidation on writes gives you most of the benefit with almost none of the risk.',
-    situation: `Your e-commerce product detail page takes 800ms to load. Profiling shows 600ms is a database query joining products, inventory, and pricing tables. The data changes at most a few times per day (price updates, inventory adjustments). The page gets ~5,000 requests per hour. You have Redis available. What caching approach do you use?`,
+    overview: 'Client-side caching is about balancing freshness against speed. Show cached data immediately (fast), refetch in the background (fresh), and invalidate explicitly on known writes (correct). This is the stale-while-revalidate pattern.',
+    situation: `Users navigating between pages in your React app always see a loading spinner — every route change re-fetches data even if the user visited that page 30 seconds ago. The product detail data changes maybe a few times per day. The page gets a lot of navigation (users browse back and forth). What caching approach do you take?`,
     options: [
       {
         id: 'a',
-        label: 'Cache the query result in Redis with a TTL of 5-10 minutes, invalidate on write',
-        explanation: 'This is the right balance. A short TTL (5-10 min) means stale data resolves itself even if invalidation misses. Explicit invalidation on price/inventory writes keeps it fresh for important changes. Redis gives you sub-millisecond reads on 5k req/hr easily. The key insight: perfect cache consistency is expensive — for product pages, a few minutes of stale data is almost always acceptable.',
+        label: 'Use stale-while-revalidate: show cached data immediately, refetch in the background, invalidate on writes',
+        explanation: 'This is the right balance. Show what you have (no spinner for returning visits), fetch fresh data silently in the background, update when it arrives. React Query and SWR implement this by default — staleTime controls how long cached data is considered fresh (no background refetch), cacheTime controls how long it stays in memory. For product data that changes a few times per day, a staleTime of 5 minutes means no unnecessary refetches. When the user edits a product, call queryClient.invalidateQueries() to mark that cache stale immediately. This gives you instant navigations without stale data problems.',
         isRecommended: true,
       },
       {
         id: 'b',
-        label: 'Add database indexes to the join columns and optimize the query first',
-        explanation: 'Query optimization is worth doing, but it\'s a separate concern and unlikely to get you from 600ms to <50ms for a complex join. Caching and indexing are complementary — do both. But if the data rarely changes and you have Redis, caching gives you an immediate, dramatic improvement.',
+        label: 'Store API responses in localStorage with a 1-hour TTL',
+        explanation: 'localStorage caching works but has pitfalls: it persists across sessions (data from yesterday can show today), it\'s synchronous and blocks the main thread for large payloads, and invalidation on writes is easy to forget. React Query\'s in-memory cache with a staleTime achieves the same goal for within-session caching with none of these drawbacks. Use localStorage/IndexedDB only for offline support or intentional persistence across sessions.',
         isRecommended: false,
       },
       {
         id: 'c',
-        label: 'Cache indefinitely and manually clear the cache on every product update',
-        explanation: 'Indefinite caching without TTL is fragile — if invalidation code has a bug or a write path is missed, you serve stale data forever with no self-healing. Always use a TTL as a safety net. Explicit invalidation + TTL is more robust than either alone.',
+        label: 'Fetch data in a top-level component and pass it as props through the tree to avoid re-fetching',
+        explanation: 'Lifting data to a parent and passing it as props prevents re-fetching, but it creates prop drilling and couples unrelated components. It also doesn\'t help when the user navigates away and comes back — the parent unmounts and data is lost. A data-fetching library with a cache solves this at the right layer without the coupling.',
         isRecommended: false,
       },
     ],

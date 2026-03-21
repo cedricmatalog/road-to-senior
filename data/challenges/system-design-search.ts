@@ -2,31 +2,31 @@ import type { Challenge } from '@/lib/types'
 
 const challenge: Challenge = {
   slug: 'system-design-search',
-  title: 'Add Full-Text Search to Your App',
-  description: 'Users need to search across 1M+ product records. Your PostgreSQL LIKE queries are too slow. What\'s your approach?',
+  title: 'Add Search to a Large List',
+  description: 'Your app has a list of 10,000+ items. Users need to search it. What\'s the right approach?',
   type: 'scenario',
   difficulty: 'senior',
   skills: ['system-design', 'performance'],
   content: {
-    overview: 'Always optimise in place before reaching for a new system. PostgreSQL full-text search handles millions of records well. Elasticsearch is powerful but operationally expensive — earn it.',
-    situation: `Your e-commerce app has 1M+ products. Users can search by name, description, and tags. Currently you're using PostgreSQL with ILIKE queries — they're taking 2-5 seconds on large searches. You need noticeably faster search. The data changes ~5,000 times per day (new products, price updates). You have 2 engineers and about 2 weeks. What's your approach?`,
+    overview: 'Search UX has two layers: where you filter (client vs. server) and how fast it feels (debounce, loading states, highlighting). For large datasets, server-side filtering is required — but the UI still needs to feel instant.',
+    situation: `You're building a search feature for a product catalogue with 10,000+ items. Right now the app loads all items on mount and filters them in the browser with Array.filter(). It works for 200 items but becomes unusably slow as the catalogue grows. Users type in a search box and expect instant results. What's your approach?`,
     options: [
       {
         id: 'a',
-        label: 'Add PostgreSQL full-text search with GIN indexes first — if still too slow, then evaluate Elasticsearch',
-        explanation: 'Start with what you have. PostgreSQL\'s full-text search (tsvector + GIN index) gets you to 100-500ms easily and handles most search needs — stemming, ranking, multi-column search. Setup takes a day, not a week. Only move to Elasticsearch if you need advanced features (fuzzy matching, faceted search, geo) or sub-10ms at very high load. Elasticsearch adds operational complexity (another service, index sync, cluster management) that two engineers don\'t need for a straightforward product search. Optimise in place first.',
+        label: 'Move filtering server-side: debounce the input (300ms), send a query param to the API, show a loading state while fetching, display results',
+        explanation: 'This is the right pattern. Debouncing (300ms) prevents an API call on every keystroke. Server-side filtering means the database does the heavy lifting — it can use full-text indexes, handle 1M+ records, and return only what the user asked for. The UI needs a loading indicator (skeleton or spinner) during the fetch, and ideally an abort controller to cancel in-flight requests when the user types again. Tools like React Query or SWR make the loading/stale state management straightforward.',
         isRecommended: true,
       },
       {
         id: 'b',
-        label: 'Migrate to Elasticsearch — it\'s purpose-built for search and will scale better',
-        explanation: 'Elasticsearch is powerful but operationally heavy. Index synchronisation from PostgreSQL requires an ETL pipeline. You now maintain two data stores and handle eventual consistency. With 2 engineers and 2 weeks, this is unlikely to ship well. PostgreSQL full-text handles millions of records at acceptable speeds with a fraction of the complexity.',
+        label: 'Keep client-side filtering but load items lazily — only fetch the next 100 when the user scrolls',
+        explanation: 'Lazy loading reduces initial load time but doesn\'t fix search. If the user searches "blue widget" and only 100 items are loaded, you miss the 50 matching items in the next page. Client-side search only works when all data is in memory — which is the problem you\'re trying to solve.',
         isRecommended: false,
       },
       {
         id: 'c',
-        label: 'Add a Redis cache for the most common search queries',
-        explanation: 'Caching helps for repeated identical queries but not for long-tail searches (which are most searches). Users constantly search for new terms that aren\'t cached. This reduces load without solving the latency problem for uncached queries. It\'s a complement to indexing, not a replacement.',
+        label: 'Use a client-side search library (Fuse.js, MiniSearch) for fuzzy search on the full dataset',
+        explanation: 'Client-side search libraries are fast and great for small datasets (< ~2,000 items). But they still require loading all items upfront — a 10,000-item payload is several MB of JSON. The indexing step also takes significant CPU on load. For datasets this size and above, server-side search is the right call.',
         isRecommended: false,
       },
     ],

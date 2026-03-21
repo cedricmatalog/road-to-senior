@@ -60,49 +60,72 @@ export function ChallengeDetailClient({ challenge }: { challenge: Challenge }) {
           background: linear-gradient(90deg, rgba(${diff.rgb},0.9) 0%, rgba(${diff.rgb},0.2) 60%, transparent 100%);
         }
 
-        /* Nav bar */
+        /* Nav bar — mobile first */
         .detail-nav {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 14px 24px;
+          padding: 10px 16px;
           border-bottom: 1px solid var(--border);
           background: var(--bg);
           position: sticky;
           top: 52px;
           z-index: 20;
+          gap: 8px;
         }
-        .detail-nav-left { display: flex; align-items: center; gap: 20px; }
-        .detail-nav-right { display: flex; align-items: center; gap: 16px; }
+        .detail-nav-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+        .detail-nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
         .nav-back {
           font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em;
           color: var(--text-faint); text-decoration: none;
-          display: flex; align-items: center; gap: 6px;
-          transition: color 0.12s;
+          display: flex; align-items: center; gap: 5px;
+          transition: color 0.12s; white-space: nowrap;
+          -webkit-tap-highlight-color: transparent;
+          padding: 4px 0;
         }
         .nav-back:hover { color: var(--text); }
+        .nav-type-badge {
+          font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em;
+          text-transform: uppercase; color: var(--text-faint);
+          white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        /* Hide type badge on very small screens */
+        @media (max-width: 380px) { .nav-type-badge { display: none; } }
         .nav-step {
           font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em;
           color: var(--text-faint); text-decoration: none;
-          transition: color 0.12s;
+          transition: color 0.12s; padding: 4px 2px;
+          -webkit-tap-highlight-color: transparent;
+          min-width: 40px; text-align: center;
         }
         .nav-step:hover { color: var(--text); }
         .nav-step-disabled {
           font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em;
           color: var(--text-faint); opacity: 0.25;
+          min-width: 40px; text-align: center;
         }
         .nav-counter {
-          font-family: var(--mono); font-size: 10px;
+          font-family: var(--mono); font-size: 9px;
           color: var(--text-faint); letter-spacing: 0.08em;
-          padding: 0 12px; border-left: 1px solid var(--border); border-right: 1px solid var(--border);
+          padding: 0 8px; border-left: 1px solid var(--border); border-right: 1px solid var(--border);
+          white-space: nowrap;
+        }
+        @media (min-width: 640px) {
+          .detail-nav { padding: 14px 24px; }
+          .detail-nav-left { gap: 20px; }
+          .detail-nav-right { gap: 16px; }
+          .nav-counter { padding: 0 12px; font-size: 10px; }
         }
 
         /* Header */
         .challenge-header {
-          max-width: 1100px;
+          max-width: var(--page-max);
           margin: 0 auto;
-          padding: 32px 24px 28px;
+          padding: 24px var(--page-px) 20px;
           border-bottom: 1px solid var(--border);
+        }
+        @media (min-width: 640px) {
+          .challenge-header { padding: 32px 24px 28px; }
         }
         .challenge-meta {
           display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap;
@@ -149,41 +172,57 @@ export function ChallengeDetailClient({ challenge }: { challenge: Challenge }) {
 
         /* Body */
         .challenge-body {
-          max-width: 1100px;
+          max-width: var(--page-max);
           margin: 0 auto;
-          padding: 32px 24px;
+          padding: 24px var(--page-px);
+        }
+        @media (min-width: 640px) {
+          .challenge-body { padding: 32px 24px; }
         }
 
         /* Up next */
         .up-next {
-          max-width: 1100px;
-          margin: 0 auto 0;
-          padding: 0 24px 0;
+          max-width: var(--page-max);
+          margin: 0 auto;
+          padding: 0 var(--page-px);
+        }
+        @media (min-width: 640px) {
+          .up-next { padding: 0 24px; }
         }
         .up-next-inner {
           border-top: 1px solid var(--border);
-          padding: 28px 0;
+          padding: 20px 0;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 20px;
+          gap: 16px;
+        }
+        @media (min-width: 640px) {
+          .up-next-inner { padding: 28px 0; gap: 20px; }
         }
         .up-next-label {
           font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em;
           text-transform: uppercase; color: var(--accent); margin: 0 0 6px;
         }
         .up-next-title {
-          font-family: var(--mono); font-size: 14px; color: var(--text); margin: 0;
+          font-family: var(--mono); font-size: 13px; color: var(--text); margin: 0;
           letter-spacing: -0.01em;
+          overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+          max-width: 180px;
         }
+        @media (min-width: 480px) { .up-next-title { max-width: 300px; font-size: 14px; } }
+        @media (min-width: 640px) { .up-next-title { max-width: 500px; } }
         .up-next-cta {
           font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
           text-transform: uppercase; text-decoration: none;
           color: var(--bg); background: var(--accent);
-          padding: 10px 20px; flex-shrink: 0; white-space: nowrap;
+          padding: 10px 16px; flex-shrink: 0; white-space: nowrap;
           transition: opacity 0.15s;
+          -webkit-tap-highlight-color: transparent;
+          min-height: 44px; display: flex; align-items: center;
         }
         .up-next-cta:hover { opacity: 0.85; }
+        @media (min-width: 640px) { .up-next-cta { padding: 10px 20px; } }
       `}</style>
 
       {/* Difficulty stripe */}
@@ -193,25 +232,24 @@ export function ChallengeDetailClient({ challenge }: { challenge: Challenge }) {
       <div className="detail-nav">
         <div className="detail-nav-left">
           <Link href="/challenges" className="nav-back">
-            <span style={{ fontSize: 'var(--text-sm)', lineHeight: 1 }}>←</span>
+            <span style={{ lineHeight: 1 }}>←</span>
             <span>Challenges</span>
           </Link>
-          <span style={{ color: 'var(--border)', fontSize: 'var(--text-sm)', lineHeight: 1 }}>|</span>
-          <span style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: diff.color, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+          <span className="nav-type-badge" style={{ color: diff.color }}>
             {typeInfo.glyph} {typeInfo.label}
           </span>
         </div>
         <div className="detail-nav-right">
           {prev ? (
-            <Link href={`/challenges/${prev.slug}`} className="nav-step" title={prev.title}>← Prev</Link>
+            <Link href={`/challenges/${prev.slug}`} className="nav-step" title={prev.title}>←</Link>
           ) : (
-            <span className="nav-step-disabled">← Prev</span>
+            <span className="nav-step-disabled">←</span>
           )}
           <span className="nav-counter">{idx + 1} / {ALL_CHALLENGES.length}</span>
           {next ? (
-            <Link href={`/challenges/${next.slug}`} className="nav-step" title={next.title}>Next →</Link>
+            <Link href={`/challenges/${next.slug}`} className="nav-step" title={next.title}>→</Link>
           ) : (
-            <span className="nav-step-disabled">Next →</span>
+            <span className="nav-step-disabled">→</span>
           )}
         </div>
       </div>
