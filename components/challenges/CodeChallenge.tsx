@@ -18,12 +18,12 @@ export function CodeChallenge({ content, onComplete }: CodeChallengeProps) {
   const [compileError, setCompileError] = useState<string | null>(null)
   const [runtimeError, setRuntimeError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
-  const [fetchError, setFetchError] = useState<string | null>(null)
+  const [fetchError, setFetchError] = useState(false)
   const completedRef = useRef(false)
 
   async function handleRun() {
     setLoading(true)
-    setFetchError(null)
+    setFetchError(false)
     setResults(null)
     setCompileError(null)
     setRuntimeError(null)
@@ -48,7 +48,7 @@ export function CodeChallenge({ content, onComplete }: CodeChallengeProps) {
         onComplete()
       }
     } catch {
-      setFetchError('Could not reach the code runner. Try again.')
+      setFetchError(true)
     } finally {
       setLoading(false)
     }
@@ -90,7 +90,7 @@ export function CodeChallenge({ content, onComplete }: CodeChallengeProps) {
       {results && (
         <ul className="space-y-2">
           {results.map((r, i) => (
-            <li key={i} className={`flex items-start gap-2 text-sm rounded-lg p-3 ${r.passed ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
+            <li key={r.description} className={`flex items-start gap-2 text-sm rounded-lg p-3 ${r.passed ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
               <span>{r.passed ? '✓' : '✗'}</span>
               <span>{r.description}{r.message ? `: ${r.message}` : ''}</span>
             </li>

@@ -52,4 +52,11 @@ describe('CodeChallenge', () => {
     fireEvent.click(screen.getByRole('button', { name: /run tests/i }))
     await waitFor(() => expect(screen.getByText(/try again/i)).toBeInTheDocument())
   })
+
+  it('shows error message when fetch rejects (network error)', async () => {
+    global.fetch = vi.fn().mockRejectedValue(new TypeError('Failed to fetch'))
+    render(<CodeChallenge content={content} onComplete={vi.fn()} />)
+    fireEvent.click(screen.getByRole('button', { name: /run tests/i }))
+    await waitFor(() => expect(screen.getByText(/try again/i)).toBeInTheDocument())
+  })
 })
