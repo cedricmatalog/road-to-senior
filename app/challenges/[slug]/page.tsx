@@ -6,7 +6,7 @@ import { ChallengeDetailClient } from './ChallengeDetailClient'
 export default async function ChallengePage({ params }: { params: { slug: string } }) {
   const { data, error } = await supabase
     .from('challenges')
-    .select('*')
+    .select('slug, title, description, type, difficulty, skills, content')
     .eq('slug', params.slug)
     .single()
 
