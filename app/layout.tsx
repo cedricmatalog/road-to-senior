@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ProgressProvider } from "@/context/ProgressContext";
+import { Nav } from "@/components/ui/Nav";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,9 +28,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 min-h-screen`}
       >
-        <ProgressProvider>{children}</ProgressProvider>
+        <ProgressProvider>
+          <Nav />
+          {children}
+        </ProgressProvider>
       </body>
     </html>
   );
