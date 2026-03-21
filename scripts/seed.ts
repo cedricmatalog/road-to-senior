@@ -12,6 +12,11 @@ const challenges = [
 ]
 
 async function seed() {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    console.error('Error: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set')
+    process.exit(1)
+  }
+
   // Use service_role key — bypasses RLS so we can write. Never expose this client-side.
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
