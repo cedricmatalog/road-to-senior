@@ -1,5 +1,5 @@
 import { render, screen, act } from '@testing-library/react'
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { ProgressProvider, useProgress } from '@/context/ProgressContext'
 
 function TestConsumer() {
@@ -37,5 +37,12 @@ describe('ProgressContext', () => {
     const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
     expect(() => render(<TestConsumer />)).toThrow('useProgress must be used inside ProgressProvider')
     spy.mockRestore()
+  })
+
+  it('markComplete persists the slug to localStorage', async () => {
+    render(<ProgressProvider><TestConsumer /></ProgressProvider>)
+    await act(async () => screen.getByText('complete').click())
+    const stored = JSON.parse(localStorage.getItem('rts:progress') ?? '{}')
+    expect(stored.completed).toContain('slug-1')
   })
 })
