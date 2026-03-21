@@ -23,15 +23,25 @@ export interface ScenarioContent {
   }>
 }
 
-export interface Challenge {
-  slug: string
-  title: string
-  description: string
-  type: 'code' | 'scenario'
-  difficulty: 'junior' | 'mid' | 'senior'
-  skills: SkillSlug[]
-  content: CodeContent | ScenarioContent
-}
+export type Challenge =
+  | {
+      slug: string
+      title: string
+      description: string
+      type: 'code'
+      difficulty: 'junior' | 'mid' | 'senior'
+      skills: SkillSlug[]
+      content: CodeContent
+    }
+  | {
+      slug: string
+      title: string
+      description: string
+      type: 'scenario'
+      difficulty: 'junior' | 'mid' | 'senior'
+      skills: SkillSlug[]
+      content: ScenarioContent
+    }
 
 export interface StoredProgress {
   version: 1
