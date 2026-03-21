@@ -6,6 +6,7 @@ import { loadProgress, saveProgress } from '@/lib/progress'
 interface ProgressContextValue {
   completed: string[]
   markComplete: (slug: string) => void
+  resetProgress: () => void
 }
 
 const ProgressContext = createContext<ProgressContextValue | null>(null)
@@ -26,8 +27,13 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     })
   }, [])
 
+  const resetProgress = useCallback(() => {
+    saveProgress({ version: 1, completed: [] })
+    setCompleted([])
+  }, [])
+
   return (
-    <ProgressContext.Provider value={{ completed, markComplete }}>
+    <ProgressContext.Provider value={{ completed, markComplete, resetProgress }}>
       {children}
     </ProgressContext.Provider>
   )

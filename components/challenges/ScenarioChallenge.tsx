@@ -6,14 +6,16 @@ import type { ScenarioContent } from '@/lib/types'
 interface ScenarioChallengeProps {
   content: ScenarioContent
   onComplete: () => void
+  onAnswer?: () => void
 }
 
-export function ScenarioChallenge({ content, onComplete }: ScenarioChallengeProps) {
+export function ScenarioChallenge({ content, onComplete, onAnswer }: ScenarioChallengeProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
   function handleSelect(id: string) {
     if (selectedId) return
     setSelectedId(id)
+    onAnswer?.()
     const option = content.options.find(o => o.id === id)
     if (option?.isRecommended) onComplete()
   }

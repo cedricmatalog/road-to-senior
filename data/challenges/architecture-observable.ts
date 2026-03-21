@@ -58,15 +58,14 @@ function createObservable(producer) {
   }}
 }
 const values = []
-let subRef
 const obs = createObservable(sub => {
-  sub.next(1)
-  setTimeout(() => sub.next(2), 10)
+  setTimeout(() => sub.next(1), 10)
+  setTimeout(() => sub.next(2), 30)
 })
-subRef = obs.subscribe({ next: v => { values.push(v); if (v === 1) subRef.unsubscribe() } })
+const subRef = obs.subscribe({ next: v => { values.push(v); if (v === 1) subRef.unsubscribe() } })
 setTimeout(() => {
   if (JSON.stringify(values) === '[1]') { console.log("PASS") } else { console.log("FAIL: " + values) }
-}, 50)`,
+}, 100)`,
       },
     ],
   },

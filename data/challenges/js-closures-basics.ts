@@ -24,6 +24,11 @@ function memoize(fn) {
     return cache[arg]
   }
 }`,
+    hints: [
+      'Create a cache object inside memoize — it will be shared across all calls via closure.',
+      'Return a new function that checks the cache before calling fn.',
+      'Use `arg in cache` to check for cached values — this handles falsy cached values like 0 correctly.',
+    ],
     explanation: 'The cache object lives in the closure — it persists across calls to the returned function. Using `arg in cache` (not `cache[arg]`) correctly handles cached falsy values like 0 or false.',
     testCases: [
       {

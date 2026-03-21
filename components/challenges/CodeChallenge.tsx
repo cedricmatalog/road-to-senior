@@ -4,15 +4,19 @@ import { useState, useRef, useEffect } from 'react'
 import CodeMirror from '@uiw/react-codemirror'
 import { javascript } from '@codemirror/lang-javascript'
 import { oneDark } from '@codemirror/theme-one-dark'
+import { indentWithTab } from '@codemirror/commands'
+import { keymap } from '@codemirror/view'
+import { autocompletion, acceptCompletion } from '@codemirror/autocomplete'
 import type { CodeContent } from '@/lib/types'
 import type { TestResult } from '@/lib/judge0'
 
 interface CodeChallengeProps {
   content: CodeContent
   onComplete: () => void
+  onAnswer?: () => void
 }
 
-export function CodeChallenge({ content, onComplete }: CodeChallengeProps) {
+export function CodeChallenge({ content, onComplete, onAnswer }: CodeChallengeProps) {
   const [code, setCode] = useState(content.starterCode)
   const [results, setResults] = useState<TestResult[] | null>(null)
   const [compileError, setCompileError] = useState<string | null>(null)
@@ -79,6 +83,7 @@ export function CodeChallenge({ content, onComplete }: CodeChallengeProps) {
       const passed = data.results?.every((r: TestResult) => r.passed)
       if (passed && !completedRef.current) {
         completedRef.current = true
+        onAnswer?.()
         onComplete()
         if (explanation) setShowExplanation(true)
       }
@@ -262,7 +267,11 @@ export function CodeChallenge({ content, onComplete }: CodeChallengeProps) {
           <CodeMirror
             value={code}
             height="340px"
-            extensions={[javascript()]}
+            extensions={[
+              javascript(),
+              autocompletion(),
+              keymap.of([{ key: 'Tab', run: acceptCompletion }, indentWithTab]),
+            ]}
             theme={oneDark}
             onChange={setCode}
             style={{ fontFamily: 'var(--mono)' }}
@@ -281,7 +290,7 @@ export function CodeChallenge({ content, onComplete }: CodeChallengeProps) {
               opacity: loading ? 0.6 : 1,
             }}
           >
-            <span style={{ fontSize: '11px' }}>{loading ? '■' : '▶'}</span>
+            <span style={{ fontSize: 'var(--text-xs)' }}>{loading ? '■' : '▶'}</span>
             {loading ? 'Running…' : 'Run Tests'}
           </button>
 
@@ -302,7 +311,7 @@ export function CodeChallenge({ content, onComplete }: CodeChallengeProps) {
             )}
             {showAnswerConfirm && (
               <>
-                <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text-dim)' }}>Load solution?</span>
+                <span style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: 'var(--text-dim)' }}>Load solution?</span>
                 <button className="ghost-btn ghost-btn-danger" onClick={handleShowAnswer}>Yes</button>
                 <button className="ghost-btn" onClick={() => setShowAnswerConfirm(false)}>Cancel</button>
               </>
@@ -317,18 +326,18 @@ export function CodeChallenge({ content, onComplete }: CodeChallengeProps) {
 
         {/* Fetch error */}
         {fetchError && (
-          <div style={{ fontFamily: 'var(--mono)', fontSize: '12px', color: 'var(--red)', border: '1px solid rgba(255,77,77,0.2)', padding: '10px 14px', display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <div style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-sm)', color: 'var(--red)', border: '1px solid rgba(255,77,77,0.2)', padding: '10px 14px', display: 'flex', gap: '12px', alignItems: 'center' }}>
             <span>Could not reach the runner.</span>
-            <button onClick={handleRun} style={{ color: 'var(--text-dim)', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--mono)', fontSize: '12px', textDecoration: 'underline', padding: 0 }}>Retry</button>
+            <button onClick={handleRun} style={{ color: 'var(--text-dim)', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--mono)', fontSize: 'var(--text-sm)', textDecoration: 'underline', padding: 0 }}>Retry</button>
           </div>
         )}
 
         {/* Compile / runtime errors */}
         {compileError && (
-          <pre style={{ fontFamily: 'var(--mono)', fontSize: '12px', color: 'var(--red)', background: 'rgba(255,77,77,0.05)', border: '1px solid rgba(255,77,77,0.2)', padding: '14px', overflowX: 'auto', margin: 0, lineHeight: 1.6 }}>{compileError}</pre>
+          <pre style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-sm)', color: 'var(--red)', background: 'rgba(255,77,77,0.05)', border: '1px solid rgba(255,77,77,0.2)', padding: '14px', overflowX: 'auto', margin: 0, lineHeight: 1.6 }}>{compileError}</pre>
         )}
         {runtimeError && (
-          <pre style={{ fontFamily: 'var(--mono)', fontSize: '12px', color: 'var(--amber)', background: 'rgba(245,166,35,0.05)', border: '1px solid rgba(245,166,35,0.2)', padding: '14px', overflowX: 'auto', margin: 0, lineHeight: 1.6 }}>{runtimeError}</pre>
+          <pre style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-sm)', color: 'var(--amber)', background: 'rgba(245,166,35,0.05)', border: '1px solid rgba(245,166,35,0.2)', padding: '14px', overflowX: 'auto', margin: 0, lineHeight: 1.6 }}>{runtimeError}</pre>
         )}
 
         {/* Hints revealed */}
@@ -336,7 +345,7 @@ export function CodeChallenge({ content, onComplete }: CodeChallengeProps) {
           <div className="hints-section">
             <div className="hints-header">
               <span className="hints-label">Hints</span>
-              <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-faint)', letterSpacing: '0.08em' }}>
+              <span style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: 'var(--text-faint)', letterSpacing: '0.08em' }}>
                 {hintsRevealed}/{hints.length}
               </span>
             </div>
@@ -366,7 +375,7 @@ export function CodeChallenge({ content, onComplete }: CodeChallengeProps) {
                   }}
                 />
               </div>
-              <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: allPassed ? 'var(--accent)' : 'var(--text-faint)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+              <span style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: allPassed ? 'var(--accent)' : 'var(--text-faint)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
                 {allPassed ? 'All passed' : 'Tests'}
               </span>
             </div>
@@ -388,7 +397,7 @@ export function CodeChallenge({ content, onComplete }: CodeChallengeProps) {
                     <span className="test-icon" style={{ color: r.passed ? 'var(--accent)' : 'var(--red)' }}>
                       {r.passed ? '✓' : '✗'}
                     </span>
-                    <span style={{ color: 'var(--text-dim)', fontFamily: 'var(--mono)', fontSize: '12px', lineHeight: 1.5 }}>
+                    <span style={{ color: 'var(--text-dim)', fontFamily: 'var(--mono)', fontSize: 'var(--text-sm)', lineHeight: 1.5 }}>
                       {r.description}
                       {r.message && <span style={{ color: 'var(--red)' }}>: {r.message}</span>}
                     </span>

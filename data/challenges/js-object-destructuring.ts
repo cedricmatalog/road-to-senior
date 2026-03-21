@@ -21,6 +21,11 @@ function getUserInfo(user) {
   const { name, email, role = 'viewer' } = user
   return { name, email, role }
 }`,
+    hints: [
+      'Check if user is null/undefined first and return null early.',
+      'Destructure with a default: const { name, email, role = \'viewer\' } = user',
+      'Return the three values as a plain object: { name, email, role }',
+    ],
     explanation: 'Destructuring with a default (role = \'viewer\') is cleaner than role || \'viewer\' because it only applies when the value is undefined, not when it\'s 0 or false. Always guard against null/undefined inputs at the function boundary.',
     testCases: [
       {

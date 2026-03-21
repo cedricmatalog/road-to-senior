@@ -24,7 +24,7 @@ export function SkillMap({ challenges }: SkillMapProps) {
 
   const SectionLabel = ({ children }: { children: string }) => (
     <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
-      <p style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--accent)', letterSpacing: '0.15em', textTransform: 'uppercase', margin: 0 }}>{children}</p>
+      <p style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: 'var(--accent)', letterSpacing: '0.15em', textTransform: 'uppercase', margin: 0 }}>{children}</p>
       <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
     </div>
   )

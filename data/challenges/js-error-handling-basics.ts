@@ -24,6 +24,11 @@ function safeParseJSON(str) {
     return { ok: false, error }
   }
 }`,
+    hints: [
+      'Wrap JSON.parse in a try/catch — it throws on invalid input.',
+      'On success return { ok: true, value: JSON.parse(str) }.',
+      'In the catch block, return { ok: false, error } — the caught error object goes straight into the result.',
+    ],
     explanation: 'The result object pattern (ok/value vs ok/error) is a clean alternative to throwing. Callers can check ok without needing try/catch, and the error is still available for logging. This mirrors Rust\'s Result type and Go\'s (value, err) returns.',
     testCases: [
       {

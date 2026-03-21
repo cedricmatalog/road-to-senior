@@ -29,6 +29,11 @@ function executionOrder() {
     }, 0)
   })
 }`,
+    hints: [
+      'Push \'sync\' immediately (synchronous code runs first), then schedule the other two.',
+      'Promise.resolve().then(() => log.push(\'microtask\')) schedules a microtask — it runs before setTimeout.',
+      'Use setTimeout(() => { log.push(\'macrotask\'); resolve(log) }, 0) — resolve inside the setTimeout so the Promise waits for all three.',
+    ],
     explanation: 'sync runs first (it\'s in the main execution). Promise microtasks run before the next event loop tick. setTimeout with 0ms is a macrotask — it runs after all pending microtasks. This is why Promise.then() always fires before setTimeout even at 0ms delay.',
     testCases: [
       {

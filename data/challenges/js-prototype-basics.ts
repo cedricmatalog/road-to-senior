@@ -42,6 +42,11 @@ class LinkedList {
     return result
   }
 }`,
+    hints: [
+      'Each node needs a value and a next property. Set next to null in the constructor.',
+      'append: walk to the last node by following .next until current.next is null, then set current.next = new LinkedList(value).',
+      'toArray: start at this, push current.value, move to current.next — repeat until current is null.',
+    ],
     explanation: 'append walks to the tail by following .next pointers. toArray does the same to collect values. The key pattern: `let current = this; while (current.next) { current = current.next }` — this is how you traverse any linked structure.',
     testCases: [
       {

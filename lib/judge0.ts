@@ -8,7 +8,21 @@ export function buildSubmissionCode(
   userCode: string,
   testCases: Array<{ description: string; testCode: string }>
 ): string {
-  const harness = testCases.map(tc => tc.testCode).join('\n')
+  const harness = testCases.map(tc => {
+    const wrapped = `{
+const assert = {
+  strictEqual(a, b) { if (a !== b) throw new Error(String(a) + ' !== ' + String(b)) },
+  deepEqual(a, b) { if (JSON.stringify(a) !== JSON.stringify(b)) throw new Error(JSON.stringify(a) + ' !== ' + JSON.stringify(b)) },
+  ok(v, msg) { if (!v) throw new Error(msg || 'Expected truthy') },
+};
+const _linesBefore = _lines.length;
+try {
+${tc.testCode}
+if (_lines.length === _linesBefore) console.log('PASS')
+} catch(e) { console.log('FAIL: ' + e.message) }
+}`
+    return wrapped
+  }).join('\n')
   return `${userCode}\n\n// --- test harness ---\n${harness}`
 }
 
@@ -33,6 +47,7 @@ export async function runCode(
     const vm = await import('vm')
     const lines: string[] = []
     const ctx: Record<string, unknown> = {
+      _lines: lines,
       console: { log: (...args: unknown[]) => lines.push(args.map(String).join(' ')) },
       setTimeout, clearTimeout, setInterval, clearInterval,
       Promise, Error, JSON, Math, Array, Object, String, Number, Boolean,

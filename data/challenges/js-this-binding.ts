@@ -34,6 +34,11 @@ class User {
     this.greet = () => \`Hello, \${this.name}\`
   }
 }`,
+    hints: [
+      'When greet is detached (const greet = user.greet), it loses its this context. Arrow functions fix this.',
+      'Assign an arrow function in the constructor: this.greet = () => `Hello, ${this.name}`',
+      'Arrow functions inherit this from where they are defined (the constructor), not where they are called.',
+    ],
     explanation: 'Arrow functions don\'t have their own `this` — they inherit it from the enclosing lexical scope. Assigning an arrow function in the constructor binds it permanently to the instance. Alternative: use .bind(this) in the constructor: `this.greet = this.greet.bind(this)`',
     testCases: [
       {

@@ -36,6 +36,11 @@ function addTag(tags, newTag) {
 function removeTag(tags, tag) {
   return tags.filter(t => t !== tag)
 }`,
+    hints: [
+      'updateUser: use object spread — { ...user, ...changes } creates a new object with all original properties plus the changes applied on top.',
+      'addTag: use array spread — [...tags, newTag] returns a new array without touching the original.',
+      'removeTag: .filter() always returns a new array. Filter out the tag you want to remove.',
+    ],
     explanation: 'Object spread `{ ...user, ...changes }` creates a shallow copy with changes applied. Array spread `[...tags, newTag]` appends without mutation. filter always returns a new array. These patterns are the foundation of immutable state management.',
     testCases: [
       {

@@ -41,7 +41,7 @@ export function ChallengeFilters() {
 
   const pillBase: React.CSSProperties = {
     fontFamily: 'var(--mono)',
-    fontSize: '10px',
+    fontSize: 'var(--text-xs)',
     letterSpacing: '0.08em',
     textTransform: 'uppercase',
     padding: '4px 10px',
@@ -57,7 +57,7 @@ export function ChallengeFilters() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
       {/* Difficulty pills */}
       <div style={{ display: 'flex', gap: '4px', alignItems: 'center', flexWrap: 'wrap' }}>
-        <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-faint)', letterSpacing: '0.12em', textTransform: 'uppercase', marginRight: '4px', width: '48px', flexShrink: 0 }}>Level</span>
+        <span style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: 'var(--text-faint)', letterSpacing: '0.12em', textTransform: 'uppercase', marginRight: '4px', width: '48px', flexShrink: 0 }}>Level</span>
         {DIFFICULTY_OPTIONS.map(opt => {
           const active = activeDiff === opt.value
           return (
@@ -82,7 +82,7 @@ export function ChallengeFilters() {
 
       {/* Type pills */}
       <div style={{ display: 'flex', gap: '4px', alignItems: 'center', flexWrap: 'wrap' }}>
-        <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-faint)', letterSpacing: '0.12em', textTransform: 'uppercase', marginRight: '4px', width: '48px', flexShrink: 0 }}>Type</span>
+        <span style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: 'var(--text-faint)', letterSpacing: '0.12em', textTransform: 'uppercase', marginRight: '4px', width: '48px', flexShrink: 0 }}>Type</span>
         {TYPE_OPTIONS.map(opt => {
           const active = activeType === opt.value
           return (
@@ -107,7 +107,7 @@ export function ChallengeFilters() {
 
       {/* Skill select */}
       <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
-        <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-faint)', letterSpacing: '0.12em', textTransform: 'uppercase', marginRight: '4px', width: '48px', flexShrink: 0 }}>Skill</span>
+        <span style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: 'var(--text-faint)', letterSpacing: '0.12em', textTransform: 'uppercase', marginRight: '4px', width: '48px', flexShrink: 0 }}>Skill</span>
         <div style={{ position: 'relative' }}>
           <select
             aria-label="Filter by skill"
@@ -127,7 +127,7 @@ export function ChallengeFilters() {
             <option value="">All Skills</option>
             {SKILL_SLUGS.map(s => <option key={s} value={s}>{SKILL_AREAS[s].label}</option>)}
           </select>
-          <span style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-faint)', fontSize: '8px', pointerEvents: 'none' }}>▼</span>
+          <span style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-faint)', fontSize: 'var(--text-xs)', pointerEvents: 'none' }}>▼</span>
         </div>
 
         {hasFilters && (

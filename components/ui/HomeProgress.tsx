@@ -26,18 +26,18 @@ export function HomeProgress() {
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
         <div>
-          <span style={{ fontFamily: 'var(--mono)', fontSize: '24px', fontWeight: 500, color: 'var(--accent)' }}>{pct}<span style={{ fontSize: '13px', color: 'var(--accent-dim)' }}>%</span></span>
+          <span style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-lg)', fontWeight: 500, color: 'var(--accent)' }}>{pct}<span style={{ fontSize: 'var(--text-sm)', color: 'var(--accent-dim)' }}>%</span></span>
         </div>
         <div>
-          <p style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--accent)', letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 2px' }}>Your progress</p>
-          <p style={{ fontFamily: 'var(--sans)', fontSize: '13px', color: 'var(--text-dim)', margin: 0 }}>
+          <p style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: 'var(--accent)', letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 2px' }}>Your progress</p>
+          <p style={{ fontFamily: 'var(--sans)', fontSize: 'var(--text-sm)', color: 'var(--text-dim)', margin: 0 }}>
             {completed.length} of {total} challenges completed
           </p>
         </div>
       </div>
       {nextChallenge && (
         <Link href={`/challenges/${nextChallenge.slug}`} style={{
-          fontFamily: 'var(--mono)', fontSize: '12px',
+          fontFamily: 'var(--mono)', fontSize: 'var(--text-sm)',
           color: 'var(--bg)', background: 'var(--accent)',
           padding: '10px 20px', textDecoration: 'none',
           letterSpacing: '0.06em', flexShrink: 0,
@@ -47,7 +47,7 @@ export function HomeProgress() {
         </Link>
       )}
       {!nextChallenge && (
-        <span style={{ fontFamily: 'var(--mono)', fontSize: '12px', color: 'var(--accent)', letterSpacing: '0.08em' }}>
+        <span style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-sm)', color: 'var(--accent)', letterSpacing: '0.08em' }}>
           ✓ All complete
         </span>
       )}

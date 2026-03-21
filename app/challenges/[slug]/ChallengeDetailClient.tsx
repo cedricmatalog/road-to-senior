@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useProgress } from '@/context/ProgressContext'
 import { CodeChallenge } from '@/components/challenges/CodeChallenge'
@@ -23,6 +24,8 @@ const TYPE_CONFIG = {
 export function ChallengeDetailClient({ challenge }: { challenge: Challenge }) {
   const { completed, markComplete } = useProgress()
   const isCompleted = completed.includes(challenge.slug)
+  const [isAnswered, setIsAnswered] = useState(false)
+  useEffect(() => { if (isCompleted) setIsAnswered(true) }, [isCompleted])
   const diff = DIFF_CONFIG[challenge.difficulty] ?? { label: challenge.difficulty, color: 'var(--text-dim)', rgb: '100,100,100' }
   const typeInfo = TYPE_CONFIG[challenge.type as keyof typeof TYPE_CONFIG] ?? { glyph: '?', label: challenge.type }
 
@@ -32,6 +35,11 @@ export function ChallengeDetailClient({ challenge }: { challenge: Challenge }) {
 
   function handleComplete() {
     if (!isCompleted) markComplete(challenge.slug)
+    setIsAnswered(true)
+  }
+
+  function handleAnswer() {
+    setIsAnswered(true)
   }
 
   return (
@@ -185,11 +193,11 @@ export function ChallengeDetailClient({ challenge }: { challenge: Challenge }) {
       <div className="detail-nav">
         <div className="detail-nav-left">
           <Link href="/challenges" className="nav-back">
-            <span style={{ fontSize: '14px', lineHeight: 1 }}>←</span>
+            <span style={{ fontSize: 'var(--text-sm)', lineHeight: 1 }}>←</span>
             <span>Challenges</span>
           </Link>
-          <span style={{ color: 'var(--border)', fontSize: '16px', lineHeight: 1 }}>|</span>
-          <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: diff.color, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+          <span style={{ color: 'var(--border)', fontSize: 'var(--text-sm)', lineHeight: 1 }}>|</span>
+          <span style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: diff.color, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
             {typeInfo.glyph} {typeInfo.label}
           </span>
         </div>
@@ -233,14 +241,14 @@ export function ChallengeDetailClient({ challenge }: { challenge: Challenge }) {
       {/* Challenge body */}
       <div className="challenge-body">
         {challenge.type === 'code' ? (
-          <CodeChallenge content={challenge.content as CodeContent} onComplete={handleComplete} />
+          <CodeChallenge content={challenge.content as CodeContent} onComplete={handleComplete} onAnswer={handleAnswer} />
         ) : (
-          <ScenarioChallenge content={challenge.content as ScenarioContent} onComplete={handleComplete} />
+          <ScenarioChallenge content={challenge.content as ScenarioContent} onComplete={handleComplete} onAnswer={handleAnswer} />
         )}
       </div>
 
       {/* Up next */}
-      {isCompleted && next && (
+      {isAnswered && next && (
         <div className="up-next">
           <div className="up-next-inner">
             <div>

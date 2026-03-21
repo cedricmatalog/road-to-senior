@@ -257,18 +257,18 @@ export default async function ChallengesPage({ searchParams }: PageProps) {
         gap: '24px',
       }}>
         <div>
-          <p style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--accent)', letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: '10px' }}>
+          <p style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: 'var(--accent)', letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: '10px' }}>
             Index
           </p>
           <h1 style={{ fontFamily: 'var(--mono)', fontSize: 'clamp(28px, 5vw, 48px)', fontWeight: 500, color: 'var(--text)', margin: '0 0 4px', letterSpacing: '-0.03em', lineHeight: 0.95 }}>
             Challenges
           </h1>
-          <p style={{ fontFamily: 'var(--mono)', fontSize: '13px', color: 'var(--text-faint)', margin: '10px 0 0', letterSpacing: '0.02em' }}>
+          <p style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-sm)', color: 'var(--text-faint)', margin: '10px 0 0', letterSpacing: '0.02em' }}>
             <span style={{ color: 'var(--text)' }}>{challenges.length}</span>
             <span style={{ margin: '0 6px', color: 'var(--border-hi)' }}>/</span>
             <span>{ALL_CHALLENGES.length}</span>
-            {activeTrackTitle && <span style={{ color: 'var(--accent)', marginLeft: '8px', fontSize: '10px', letterSpacing: '0.1em' }}>{activeTrackTitle}</span>}
-            {isFiltered && !activeTrackTitle && <span style={{ color: 'var(--accent)', marginLeft: '8px', fontSize: '10px', letterSpacing: '0.1em' }}>filtered</span>}
+            {activeTrackTitle && <span style={{ color: 'var(--accent)', marginLeft: '8px', fontSize: 'var(--text-xs)', letterSpacing: '0.1em' }}>{activeTrackTitle}</span>}
+            {isFiltered && !activeTrackTitle && <span style={{ color: 'var(--accent)', marginLeft: '8px', fontSize: 'var(--text-xs)', letterSpacing: '0.1em' }}>filtered</span>}
           </p>
         </div>
 
@@ -279,7 +279,7 @@ export default async function ChallengesPage({ searchParams }: PageProps) {
 
       {challenges.length === 0 ? (
         <div style={{ padding: '80px 0', textAlign: 'center' }}>
-          <p style={{ fontFamily: 'var(--mono)', fontSize: '13px', color: 'var(--text-faint)', letterSpacing: '0.05em' }}>— no challenges match —</p>
+          <p style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-sm)', color: 'var(--text-faint)', letterSpacing: '0.05em' }}>— no challenges match —</p>
         </div>
       ) : (
         <>

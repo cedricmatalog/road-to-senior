@@ -29,10 +29,10 @@ export function SkillCard({ label, slug, coverage }: SkillCardProps) {
       onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--border)')}>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-        <p style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: isGap ? 'var(--amber)' : 'var(--text-dim)', margin: 0, letterSpacing: '0.04em', lineHeight: 1.4 }}>
+        <p style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: isGap ? 'var(--amber)' : 'var(--text-dim)', margin: 0, letterSpacing: '0.04em', lineHeight: 1.4 }}>
           {label}
         </p>
-        <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: pct > 0 ? 'var(--accent)' : 'var(--text-faint)', letterSpacing: '0.05em', flexShrink: 0, marginLeft: '8px' }}>
+        <span style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: pct > 0 ? 'var(--accent)' : 'var(--text-faint)', letterSpacing: '0.05em', flexShrink: 0, marginLeft: '8px' }}>
           {pct}%
         </span>
       </div>

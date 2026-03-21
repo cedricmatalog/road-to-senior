@@ -13,7 +13,7 @@ const challenge: Challenge = {
   const startIndex = Math.floor(scrollTop / itemHeight)
   const endIndex = Math.min(
     items.length - 1,
-    Math.floor((scrollTop + viewportHeight) / itemHeight)
+    Math.ceil((scrollTop + viewportHeight) / itemHeight) - 1
   )
   return items.slice(startIndex, endIndex + 1).map((item, i) => ({
     item,
@@ -34,7 +34,7 @@ const challenge: Challenge = {
         testCode: `
 function getVisibleItems(items, scrollTop, viewportHeight, itemHeight) {
   const startIndex = Math.floor(scrollTop / itemHeight)
-  const endIndex = Math.min(items.length - 1, Math.floor((scrollTop + viewportHeight) / itemHeight))
+  const endIndex = Math.min(items.length - 1, Math.ceil((scrollTop + viewportHeight) / itemHeight) - 1)
   return items.slice(startIndex, endIndex + 1).map((item, i) => ({ item, index: startIndex + i, top: (startIndex + i) * itemHeight }))
 }
 const items = Array.from({ length: 100 }, (_, i) => 'item-' + i)
@@ -48,7 +48,7 @@ else { console.log("FAIL: " + visible.map(v => v.item).join(', ')) }`,
         testCode: `
 function getVisibleItems(items, scrollTop, viewportHeight, itemHeight) {
   const startIndex = Math.floor(scrollTop / itemHeight)
-  const endIndex = Math.min(items.length - 1, Math.floor((scrollTop + viewportHeight) / itemHeight))
+  const endIndex = Math.min(items.length - 1, Math.ceil((scrollTop + viewportHeight) / itemHeight) - 1)
   return items.slice(startIndex, endIndex + 1).map((item, i) => ({ item, index: startIndex + i, top: (startIndex + i) * itemHeight }))
 }
 const items = Array.from({ length: 100 }, (_, i) => 'item-' + i)

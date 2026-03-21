@@ -27,6 +27,11 @@ function makeCounters() {
   }
   return fns
 }`,
+    hints: [
+      'The problem is that var creates one shared variable for all loop iterations. Change it to let.',
+      'let is block-scoped — each iteration of the loop gets its own copy of i.',
+      'You only need to change one word in the starter code.',
+    ],
     explanation: 'With var, there is one i shared by all closures — by the time any of the functions run, i is 3. With let, each loop iteration creates a new i binding captured independently by each closure. This is why let was introduced: to fix this exact class of bugs.',
     testCases: [
       {

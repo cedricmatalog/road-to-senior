@@ -37,7 +37,7 @@ class FocusTrap {
 
   activate(initialFocusId = null) {
     this.active = true
-    this.previousFocusId = document.activeElement?.id ?? null
+    this.previousFocusId = (typeof document !== 'undefined' ? document.activeElement?.id : null) ?? null
     if (initialFocusId && this.focusableIds.includes(initialFocusId)) {
       this.currentIndex = this.focusableIds.indexOf(initialFocusId)
     } else {

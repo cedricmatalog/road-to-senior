@@ -66,25 +66,25 @@ function TrackCard({ track, idx }: { track: typeof TRACKS[0]; idx: number }) {
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
               <span style={{
-                fontFamily: 'var(--mono)', fontSize: '10px', letterSpacing: '0.15em',
+                fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', letterSpacing: '0.15em',
                 textTransform: 'uppercase', color: 'var(--text-faint)',
               }}>{num}</span>
               {isComplete && (
                 <span style={{
-                  fontFamily: 'var(--mono)', fontSize: '9px', letterSpacing: '0.12em',
+                  fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', letterSpacing: '0.12em',
                   textTransform: 'uppercase', color: cfg.color,
                   border: `1px solid ${cfg.color}`, padding: '1px 6px',
                 }}>complete</span>
               )}
             </div>
             <h3 style={{
-              fontFamily: 'var(--mono)', fontSize: '14px', fontWeight: 500,
+              fontFamily: 'var(--mono)', fontSize: 'var(--text-sm)', fontWeight: 500,
               color: 'var(--text)', margin: '0 0 6px', letterSpacing: '-0.01em', lineHeight: 1.3,
             }}>
               {track.title}
             </h3>
             <p style={{
-              fontFamily: 'var(--sans)', fontSize: '12px', color: 'var(--text-dim)',
+              fontFamily: 'var(--sans)', fontSize: 'var(--text-sm)', color: 'var(--text-dim)',
               margin: 0, lineHeight: 1.6,
             }}>
               {track.description}
@@ -99,12 +99,12 @@ function TrackCard({ track, idx }: { track: typeof TRACKS[0]; idx: number }) {
                 position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
                 <span style={{
-                  fontFamily: 'var(--mono)', fontSize: '10px', fontWeight: 500,
+                  fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', fontWeight: 500,
                   color: pct === 0 ? 'var(--text-faint)' : cfg.color, transform: 'none',
                 }}>{pct === 100 ? '✓' : `${pct}%`}</span>
               </div>
             </div>
-            <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-faint)', letterSpacing: '0.06em' }}>
+            <span style={{ fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: 'var(--text-faint)', letterSpacing: '0.06em' }}>
               {done}/{total}
             </span>
           </div>
@@ -129,13 +129,13 @@ function TrackCard({ track, idx }: { track: typeof TRACKS[0]; idx: number }) {
               }}
             >
               <span style={{
-                fontFamily: 'var(--mono)', fontSize: '10px', flexShrink: 0, width: '12px', textAlign: 'center',
+                fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', flexShrink: 0, width: '12px', textAlign: 'center',
                 color: isDone ? cfg.color : 'var(--text-faint)',
               }}>
                 {isDone ? '✓' : '·'}
               </span>
               <span style={{
-                fontFamily: 'var(--sans)', fontSize: '12px', lineHeight: 1.3, flex: 1,
+                fontFamily: 'var(--sans)', fontSize: 'var(--text-sm)', lineHeight: 1.3, flex: 1,
                 textDecoration: isDone ? 'line-through' : 'none',
                 textDecorationColor: 'var(--border-hi)',
               }}>
@@ -153,7 +153,7 @@ function TrackCard({ track, idx }: { track: typeof TRACKS[0]; idx: number }) {
           className="track-cta"
           style={{
             display: 'inline-flex', alignItems: 'center', gap: '8px',
-            fontFamily: 'var(--mono)', fontSize: '11px', letterSpacing: '0.08em',
+            fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', letterSpacing: '0.08em',
             textTransform: 'uppercase', textDecoration: 'none',
             color: isComplete ? cfg.color : 'var(--text-dim)',
             transition: 'color 0.15s',
@@ -192,7 +192,7 @@ function LevelSection({ level, tracks, totalCompleted }: {
           marginRight: '16px',
         }}>
           <span style={{
-            fontFamily: 'var(--mono)', fontSize: '11px', fontWeight: 500,
+            fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', fontWeight: 500,
             color: allComplete ? 'var(--bg)' : cfg.color,
           }}>{cfg.index}</span>
         </div>
@@ -200,13 +200,13 @@ function LevelSection({ level, tracks, totalCompleted }: {
         <div style={{ flex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px' }}>
             <h2 style={{
-              fontFamily: 'var(--mono)', fontSize: '13px', fontWeight: 500,
+              fontFamily: 'var(--mono)', fontSize: 'var(--text-sm)', fontWeight: 500,
               letterSpacing: '0.12em', textTransform: 'uppercase', color: cfg.color, margin: 0,
             }}>
               {cfg.label}
             </h2>
             <span style={{
-              fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text-faint)',
+              fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: 'var(--text-faint)',
               letterSpacing: '0.08em',
             }}>
               {tracks.length} track{tracks.length !== 1 ? 's' : ''}
@@ -276,7 +276,7 @@ export default function TracksPage() {
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '24px', flexWrap: 'wrap' }}>
           <div>
             <p style={{
-              fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--accent)',
+              fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: 'var(--accent)',
               letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: '10px',
             }}>Learning Path</p>
             <h1 style={{
@@ -286,7 +286,7 @@ export default function TracksPage() {
               Tracks<span className="cursor" style={{ marginLeft: '4px' }} />
             </h1>
             <p style={{
-              fontFamily: 'var(--sans)', fontSize: '14px', color: 'var(--text-dim)',
+              fontFamily: 'var(--sans)', fontSize: 'var(--text-sm)', color: 'var(--text-dim)',
               margin: 0, maxWidth: '400px', lineHeight: 1.7,
             }}>
               Structured sequences from junior to senior. Each track targets a specific skill domain.
@@ -305,11 +305,11 @@ export default function TracksPage() {
                 borderRight: i < 2 ? '1px solid var(--border)' : 'none',
               }}>
                 <div style={{
-                  fontFamily: 'var(--mono)', fontSize: '22px', fontWeight: 500,
+                  fontFamily: 'var(--mono)', fontSize: 'var(--text-base)', fontWeight: 500,
                   color: 'var(--accent)', lineHeight: 1, marginBottom: '4px',
                 }}>{stat.value}</div>
                 <div style={{
-                  fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-faint)',
+                  fontFamily: 'var(--mono)', fontSize: 'var(--text-xs)', color: 'var(--text-faint)',
                   letterSpacing: '0.12em', textTransform: 'uppercase',
                 }}>{stat.label}</div>
               </div>

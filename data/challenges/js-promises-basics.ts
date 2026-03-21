@@ -27,6 +27,11 @@ async function getAdultUserName(id, fetchUser) {
     return null
   }
 }`,
+    hints: [
+      'Use try/catch around the await call to handle fetch failures.',
+      'await fetchUser(id) gives you the user object — then check user.age.',
+      'Return user.name if age >= 18, null otherwise. Return null in the catch block too.',
+    ],
     explanation: 'try/catch around await is the standard error handling pattern for async functions. Return null on error rather than letting the exception propagate — unless the caller needs to know about the failure, in which case re-throw.',
     testCases: [
       {

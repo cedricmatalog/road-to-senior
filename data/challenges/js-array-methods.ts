@@ -21,6 +21,11 @@ function completedRevenue(orders) {
     .filter(order => order.status === 'completed')
     .reduce((sum, order) => sum + order.amount, 0)
 }`,
+    hints: [
+      'Use .filter() first to keep only orders where status === \'completed\'.',
+      'Chain .reduce() after filter to sum the amounts. Start the accumulator at 0.',
+      'reduce((sum, order) => sum + order.amount, 0) — the second argument to reduce is the initial value.',
+    ],
     explanation: 'filter first to narrow down only completed orders, then reduce to sum the amounts. This is clearer than a for loop because each step has one job: filter selects, reduce aggregates.',
     testCases: [
       {
