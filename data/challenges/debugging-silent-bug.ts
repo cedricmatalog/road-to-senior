@@ -8,6 +8,7 @@ const challenge: Challenge = {
   difficulty: 'junior',
   skills: ['debugging'],
   content: {
+    overview: 'Silent failures — functions that return undefined without throwing — are debugged by tracing data flow step by step, not by guessing the cause.',
     situation: `You're debugging a function called \`getActiveUsers()\` that should return an array. Callers are getting \`undefined\` instead. The function calls \`fetch()\`, parses JSON, and filters the result. No errors appear in the console. What do you do first?`,
     options: [
       {

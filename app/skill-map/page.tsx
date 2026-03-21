@@ -1,26 +1,18 @@
-import { supabase } from '@/lib/supabase'
+import { ALL_CHALLENGES } from '@/lib/challenges'
 import { SkillMap } from '@/components/skill-map/SkillMap'
 
-export default async function SkillMapPage() {
-  const { data, error } = await supabase.from('challenges').select('slug, skills')
-
-  if (error) {
-    console.error('Failed to load challenges for skill map:', error)
-    return (
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        <p className="text-red-600">Failed to load skill map. Please refresh.</p>
-      </main>
-    )
-  }
-
-  // data is { slug: string, skills: string[] }[] — a valid subset of Challenge
-  const challenges = (data ?? []) as Array<{ slug: string; skills: string[] }>
+export default function SkillMapPage() {
+  const challenges = ALL_CHALLENGES.map(c => ({ slug: c.slug, skills: c.skills }))
 
   return (
-    <main className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-gray-900 mb-2">Skill Map</h1>
-      <p className="text-gray-500 mb-8">Your coverage across the skills that define a senior engineer.</p>
+    <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 24px' }}>
+      <div style={{ padding: '48px 0 32px', borderBottom: '1px solid var(--border)', marginBottom: '40px' }}>
+        <p style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--accent)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '8px' }}>Skill Map</p>
+        <h1 style={{ fontFamily: 'var(--mono)', fontSize: '32px', fontWeight: 500, color: 'var(--text)', margin: '0 0 8px', letterSpacing: '-0.02em' }}>Coverage</h1>
+        <p style={{ fontFamily: 'var(--sans)', fontSize: '14px', color: 'var(--text-dim)', margin: 0 }}>The skills that define a senior engineer. <span style={{ color: 'var(--amber)' }}>Amber</span> = gap.</p>
+      </div>
       <SkillMap challenges={challenges} />
+      <div style={{ height: '64px' }} />
     </main>
   )
 }

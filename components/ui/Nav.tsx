@@ -2,12 +2,28 @@ import Link from 'next/link'
 
 export function Nav() {
   return (
-    <nav className="border-b border-gray-200 bg-white">
-      <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="font-bold text-gray-900">Road to Senior</Link>
-        <div className="flex gap-4 text-sm">
-          <Link href="/challenges" className="text-gray-600 hover:text-gray-900">Challenges</Link>
-          <Link href="/skill-map" className="text-gray-600 hover:text-gray-900">Skill Map</Link>
+    <nav style={{ borderBottom: '1px solid var(--border)', background: 'var(--bg)' }}>
+      <style>{`
+        .nav-link { color: var(--text-dim); transition: color 0.15s; }
+        .nav-link:hover { color: var(--text); }
+      `}</style>
+      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 24px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Link href="/" style={{ fontFamily: 'var(--mono)', fontWeight: 500, fontSize: '13px', color: 'var(--text)', textDecoration: 'none', letterSpacing: '0.05em' }}>
+          RTS<span style={{ color: 'var(--accent)' }}>.</span>
+        </Link>
+        <div style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
+          <Link href="/challenges" className="nav-link" style={{ fontFamily: 'var(--mono)', fontSize: '12px', textDecoration: 'none', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+            Challenges
+          </Link>
+          <Link href="/tracks" className="nav-link" style={{ fontFamily: 'var(--mono)', fontSize: '12px', textDecoration: 'none', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+            Tracks
+          </Link>
+          <Link href="/skill-map" className="nav-link" style={{ fontFamily: 'var(--mono)', fontSize: '12px', textDecoration: 'none', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+            Skill Map
+          </Link>
+          <Link href="/progress" className="nav-link" style={{ fontFamily: 'var(--mono)', fontSize: '12px', textDecoration: 'none', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+            Progress
+          </Link>
         </div>
       </div>
     </nav>

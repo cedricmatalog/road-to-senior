@@ -1,16 +1,11 @@
 import { notFound } from 'next/navigation'
-import { supabase } from '@/lib/supabase'
-import type { Challenge } from '@/lib/types'
+import { getChallengeBySlug } from '@/lib/challenges'
 import { ChallengeDetailClient } from './ChallengeDetailClient'
 
 export default async function ChallengePage({ params }: { params: { slug: string } }) {
-  const { data, error } = await supabase
-    .from('challenges')
-    .select('slug, title, description, type, difficulty, skills, content')
-    .eq('slug', params.slug)
-    .single()
+  const challenge = getChallengeBySlug(params.slug)
 
-  if (error || !data) notFound()
+  if (!challenge) notFound()
 
-  return <ChallengeDetailClient challenge={data as Challenge} />
+  return <ChallengeDetailClient challenge={challenge} />
 }

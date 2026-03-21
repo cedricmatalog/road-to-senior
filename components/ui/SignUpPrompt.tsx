@@ -24,14 +24,34 @@ export function SignUpPrompt({ showAfterCompletion }: { showAfterCompletion: boo
   if (!visible) return null
 
   return (
-    <div className="fixed bottom-4 right-4 max-w-sm bg-white border border-gray-200 rounded-xl shadow-lg p-4 flex items-start gap-3 z-50">
-      <p className="text-sm text-gray-700 flex-1">
-        Save your progress across devices —{' '}
-        <a href="/sign-up" className="text-blue-600 underline hover:text-blue-800">
-          create a free account
-        </a>
-      </p>
-      <button onClick={dismiss} aria-label="Dismiss" className="text-gray-400 hover:text-gray-600 text-lg leading-none">×</button>
+    <div style={{
+      position: 'fixed', bottom: '24px', right: '24px',
+      maxWidth: '300px', zIndex: 50,
+      background: 'var(--bg-raised)',
+      border: '1px solid var(--border-hi)',
+      padding: '16px 18px',
+      display: 'flex', alignItems: 'flex-start', gap: '12px',
+      boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+    }}>
+      <div style={{ flex: 1 }}>
+        <p style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--accent)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '6px' }}>Progress</p>
+        <p style={{ fontFamily: 'var(--sans)', fontSize: '13px', color: 'var(--text-dim)', lineHeight: 1.5, margin: 0 }}>
+          Save across devices —{' '}
+          <a href="/sign-up" style={{ color: 'var(--accent)', textDecoration: 'none', borderBottom: '1px solid var(--accent-dim)' }}>
+            create a free account
+          </a>
+        </p>
+      </div>
+      <button onClick={dismiss} aria-label="Dismiss" style={{
+        background: 'none', border: 'none', cursor: 'pointer',
+        color: 'var(--text-faint)', fontFamily: 'var(--mono)', fontSize: '16px',
+        lineHeight: 1, padding: 0, flexShrink: 0,
+        transition: 'color 0.15s',
+      }}
+        onMouseEnter={e => (e.currentTarget.style.color = 'var(--text)')}
+        onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-faint)')}>
+        ×
+      </button>
     </div>
   )
 }

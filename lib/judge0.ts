@@ -26,39 +26,40 @@ export async function runCode(
   userCode: string,
   testCases: Array<{ description: string; testCode: string }>
 ): Promise<{ results: TestResult[]; compileError: string | null; runtimeError: string | null }> {
-  if (!process.env.JUDGE0_API_KEY) {
-    throw new Error('JUDGE0_API_KEY environment variable is not set')
-  }
-
   const source_code = buildSubmissionCode(userCode, testCases)
-
-  const res = await fetch('https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=false&wait=true', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-RapidAPI-Key': process.env.JUDGE0_API_KEY!,
-      'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com',
-    },
-    body: JSON.stringify({ source_code, language_id: 63, // Node.js 12
-stdin: '' }),
-    signal: AbortSignal.timeout(10_000),
-  })
-
-  if (!res.ok) throw new Error(`Judge0 HTTP ${res.status}`)
-
-  const data = await res.json()
-
-  if (data.status?.id === 6) {
-    return { results: [], compileError: data.compile_output ?? 'Compilation error', runtimeError: null }
-  }
-  if (data.status?.id === 11) {
-    return { results: [], compileError: null, runtimeError: data.stderr ?? 'Runtime error' }
-  }
-
   const descriptions = testCases.map(tc => tc.description)
-  return {
-    results: parseResults(data.stdout ?? '', descriptions),
-    compileError: null,
-    runtimeError: null,
+
+  try {
+    const vm = await import('vm')
+    const lines: string[] = []
+    const ctx: Record<string, unknown> = {
+      console: { log: (...args: unknown[]) => lines.push(args.map(String).join(' ')) },
+      setTimeout, clearTimeout, setInterval, clearInterval,
+      Promise, Error, JSON, Math, Array, Object, String, Number, Boolean,
+    }
+    ctx.global = ctx
+
+    const sandbox = vm.createContext(ctx)
+    // Run synchronously — kicks off async Promise chains in the host event loop
+    new vm.Script(source_code).runInContext(sandbox, { timeout: 5000 })
+
+    // Drain the microtask/macrotask queue until output stabilises or 5s passes.
+    // vm Promises share the host event loop, so yielding here lets .then() callbacks fire.
+    const deadline = Date.now() + 5000
+    let prev = -1
+    while (lines.length !== prev && Date.now() < deadline) {
+      prev = lines.length
+      await new Promise(r => setTimeout(r, 20))
+    }
+    // One final yield to catch any last microtasks after the last setTimeout batch
+    await new Promise(r => setTimeout(r, 20))
+
+    return { results: parseResults(lines.join('\n'), descriptions), compileError: null, runtimeError: null }
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err)
+    if (err instanceof SyntaxError) {
+      return { results: [], compileError: msg, runtimeError: null }
+    }
+    return { results: [], compileError: null, runtimeError: msg }
   }
 }

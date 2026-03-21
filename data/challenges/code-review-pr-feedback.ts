@@ -8,6 +8,7 @@ const challenge: Challenge = {
   difficulty: 'mid',
   skills: ['code-review', 'mentoring'],
   content: {
+    overview: 'Effective code review is both quality gate and teaching tool. The goal is better code AND a better developer — vague feedback achieves neither.',
     situation: `A junior dev on your team opened a PR. The code works in tests, but you spot two issues: a variable named \`data\` that's actually an array of users, and a \`.catch(console.log)\` that silently swallows errors in production. The junior is enthusiastic and this is their third PR. How do you give feedback?`,
     options: [
       {

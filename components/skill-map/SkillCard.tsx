@@ -5,7 +5,7 @@ import Link from 'next/link'
 interface SkillCardProps {
   label: string
   slug: string
-  coverage: number  // 0-1
+  coverage: number
 }
 
 export function SkillCard({ label, slug, coverage }: SkillCardProps) {
@@ -17,23 +17,40 @@ export function SkillCard({ label, slug, coverage }: SkillCardProps) {
       href={`/challenges?skill=${slug}`}
       data-testid="skill-card"
       data-gap={String(isGap)}
-      className={`block rounded-lg border p-4 hover:shadow-md transition-shadow ${isGap ? 'border-amber-400 bg-amber-50' : 'border-gray-200 bg-white'}`}
-    >
-      <p className="font-medium text-sm text-gray-800 mb-2">{label}</p>
+      style={{
+        display: 'block',
+        padding: '16px',
+        background: 'var(--bg-card)',
+        border: `1px solid ${isGap ? 'var(--border)' : 'var(--border)'}`,
+        textDecoration: 'none',
+        transition: 'border-color 0.2s',
+      }}
+      onMouseEnter={e => (e.currentTarget.style.borderColor = 'var(--border-hi)')}
+      onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--border)')}>
+
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+        <p style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: isGap ? 'var(--amber)' : 'var(--text-dim)', margin: 0, letterSpacing: '0.04em', lineHeight: 1.4 }}>
+          {label}
+        </p>
+        <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: pct > 0 ? 'var(--accent)' : 'var(--text-faint)', letterSpacing: '0.05em', flexShrink: 0, marginLeft: '8px' }}>
+          {pct}%
+        </span>
+      </div>
+
       <div
         role="progressbar"
         aria-valuenow={pct}
         aria-valuemin={0}
         aria-valuemax={100}
         aria-label={`${label} completion: ${pct}%`}
-        className="h-2 rounded-full bg-gray-100 overflow-hidden"
-      >
-        <div
-          className={`h-full rounded-full ${isGap ? 'bg-amber-400' : 'bg-green-500'}`}
-          style={{ width: `${pct}%` }}
-        />
+        style={{ height: '2px', background: 'var(--bg-raised)', overflow: 'hidden' }}>
+        <div style={{
+          height: '100%',
+          width: `${pct}%`,
+          background: pct === 0 ? 'transparent' : isGap ? 'var(--amber)' : 'var(--accent)',
+          transition: 'width 0.6s ease',
+        }} />
       </div>
-      <p className="text-xs text-gray-500 mt-1">{pct}% complete</p>
     </Link>
   )
 }

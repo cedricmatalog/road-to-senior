@@ -8,6 +8,7 @@ const challenge: Challenge = {
   difficulty: 'senior',
   skills: ['system-design', 'architecture'],
   content: {
+    overview: 'Rate limiting is an infrastructure concern, not an application concern. Use the right tool — a shared, atomic counter in Redis — and avoid in-memory solutions that break when you scale.',
     situation: `A single client is making 10,000 requests per minute to your REST API, causing slow responses for everyone else. You need to add rate limiting. Your stack is Node.js with Redis available. You need to ship something in 2 hours. What approach do you take?`,
     options: [
       {
