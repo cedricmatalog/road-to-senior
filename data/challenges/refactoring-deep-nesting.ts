@@ -9,6 +9,28 @@ const challenge: Challenge = {
   skills: ['refactoring'],
   content: {
     overview: `Deep nesting (the "arrow anti-pattern") is hard to read because you need to track multiple conditions simultaneously to understand the happy path. Early returns (guard clauses) handle error/edge cases at the top and leave the main logic flat and unindented.`,
+    starterCode: `// Refactor processPayment to use early returns instead of nested ifs.
+// Return { error: string } for failures, { success: true, amount } on success.
+
+function processPayment(user, cart, card) {
+  if (user) {
+    if (user.verified) {
+      if (cart && cart.items && cart.items.length > 0) {
+        if (card && card.valid) {
+          return { success: true, amount: cart.total }
+        } else {
+          return { error: 'Invalid card' }
+        }
+      } else {
+        return { error: 'Empty cart' }
+      }
+    } else {
+      return { error: 'User not verified' }
+    }
+  } else {
+    return { error: 'No user' }
+  }
+}`,
     solution: `function processPayment(user, cart, card) {
   if (!user) return { error: 'No user' }
   if (!user.verified) return { error: 'User not verified' }

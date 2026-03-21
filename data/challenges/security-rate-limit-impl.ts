@@ -9,6 +9,13 @@ const challenge: Challenge = {
   skills: ['security', 'performance'],
   content: {
     overview: `A fixed-window rate limiter counts requests per client in a time window. When the window expires, the count resets. Simple to implement, but has a boundary burst problem — a client can double-hit at window boundaries. Good enough for most use cases.`,
+    starterCode: `// createRateLimiter(limit, windowMs) returns isAllowed(clientId).
+// Each client can make at most 'limit' requests per 'windowMs' window.
+// Requests outside the window are dropped from the count.
+
+function createRateLimiter(limit, windowMs) {
+  // your code here
+}`,
     solution: `function createRateLimiter(limit, windowMs) {
   const clients = new Map()
   return function isAllowed(clientId) {

@@ -9,6 +9,12 @@ const challenge: Challenge = {
   skills: ['closures-scope'],
   content: {
     overview: `Partial application fixes some arguments of a function and returns a new function that accepts the rest. It's a form of function specialization that reduces repetition and enables composition.`,
+    starterCode: `// partial(fn, ...presetArgs) returns a new function that calls fn
+// with presetArgs prepended to any later arguments.
+
+function partial(fn, ...presetArgs) {
+  // your code here
+}`,
     solution: `function partial(fn, ...presetArgs) {
   return function(...laterArgs) {
     return fn(...presetArgs, ...laterArgs)

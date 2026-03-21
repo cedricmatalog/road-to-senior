@@ -9,6 +9,13 @@ const challenge: Challenge = {
   skills: ['architecture', 'closures-scope'],
   content: {
     overview: `Middleware pipelines are how Express, Koa, and Redux handle cross-cutting concerns (logging, auth, error handling) without modifying core logic. Each middleware runs, does its thing, and calls next() to continue the chain — or doesn't, to short-circuit.`,
+    starterCode: `// compose(middlewares) takes an array of middleware functions and returns
+// a single function(ctx, finalHandler) that runs them in order.
+// Each middleware: (ctx, next) => { ... next() ... }
+
+function compose(middlewares) {
+  // your code here
+}`,
     solution: `function compose(middlewares) {
   return function(ctx, finalHandler) {
     let index = -1

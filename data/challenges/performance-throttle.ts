@@ -9,6 +9,12 @@ const challenge: Challenge = {
   skills: ['performance'],
   content: {
     overview: `Throttle limits call frequency — unlike debounce (which delays until calls stop), throttle fires immediately and then ignores calls for the wait period. Use throttle for scroll/resize handlers where you want regular updates, not just a final one.`,
+    starterCode: `// throttle(fn, wait) returns a function that calls fn at most once
+// per wait milliseconds, no matter how often it's called.
+
+function throttle(fn, wait) {
+  // your code here
+}`,
     solution: `function throttle(fn, wait) {
   let lastTime = 0
   return function(...args) {

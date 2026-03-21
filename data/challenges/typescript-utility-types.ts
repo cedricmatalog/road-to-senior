@@ -9,6 +9,16 @@ const challenge: Challenge = {
   skills: ['typescript'],
   content: {
     overview: `Mapped types iterate over the keys of an object type and transform each property. Understanding them from scratch reveals how TypeScript's built-in utility types work — they're all just mapped types under the hood.`,
+    starterCode: `// Implement makeReadonly(obj) — returns a frozen copy of obj.
+// Implement makePartial(obj) — returns obj unchanged (it's a type-level transform).
+
+function makeReadonly(obj) {
+  // your code here
+}
+
+function makePartial(obj) {
+  // your code here
+}`,
     solution: `type MyReadonly<T> = {
   readonly [K in keyof T]: T[K]
 }

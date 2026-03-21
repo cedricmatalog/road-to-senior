@@ -9,6 +9,16 @@ const challenge: Challenge = {
   skills: ['performance', 'architecture'],
   content: {
     overview: `An LRU cache keeps the most recently accessed items and discards the least recently used when full. It's used in browser caches, database query caches, and CDNs. The efficient implementation uses a Map (which maintains insertion order) as a doubly-linked list substitute.`,
+    starterCode: `// Implement an LRU (Least Recently Used) cache with:
+// - constructor(capacity) — max number of entries
+// - get(key) — returns value or -1 if not found (marks as recently used)
+// - put(key, value) — inserts or updates (evicts LRU if at capacity)
+
+class LRUCache {
+  constructor(capacity) {
+    // your code here
+  }
+}`,
     solution: `class LRUCache {
   constructor(capacity) {
     this.capacity = capacity

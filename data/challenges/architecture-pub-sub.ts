@@ -9,6 +9,14 @@ const challenge: Challenge = {
   skills: ['architecture'],
   content: {
     overview: `A pub/sub state store decouples state management from the components that use it. Components subscribe to state changes; nothing knows about each other directly. This is the core pattern behind Redux, Zustand, and Jotai.`,
+    starterCode: `// createStore(initialState) creates a simple state store with:
+// - getState() — returns current state
+// - setState(partial) — merges partial state and notifies listeners
+// - subscribe(listener) — registers a listener, returns unsubscribe fn
+
+function createStore(initialState) {
+  // your code here
+}`,
     solution: `function createStore(initialState) {
   let state = initialState
   const listeners = new Set()

@@ -9,6 +9,12 @@ const challenge: Challenge = {
   skills: ['typescript'],
   content: {
     overview: `Function overloads let you express that a function returns different types based on what it receives. Without them, TypeScript infers a union return type — forcing callers to narrow every time they use the result. Overloads make the caller's life easier at the cost of more type declarations.`,
+    starterCode: `// format(value) formats numbers as currency ($X.XX)
+// and strings as Title Case.
+
+function format(value) {
+  // your code here
+}`,
     solution: `function format(value) {
   if (typeof value === 'number') {
     return '$' + value.toFixed(2)

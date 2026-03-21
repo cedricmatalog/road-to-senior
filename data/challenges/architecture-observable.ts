@@ -9,6 +9,13 @@ const challenge: Challenge = {
   skills: ['architecture', 'closures-scope'],
   content: {
     overview: `An Observable represents a stream of values over time. Unlike Promises (one value, eventually), Observables emit multiple values. Implementing one from scratch reveals the design behind RxJS, event streams, and reactive UI frameworks.`,
+    starterCode: `// createObservable(producer) creates an observable.
+// producer receives a subscriber { next, error, complete }.
+// subscribe(observer) runs the producer and returns { unsubscribe }.
+
+function createObservable(producer) {
+  // your code here
+}`,
     solution: `function createObservable(producer) {
   return {
     subscribe(observer) {

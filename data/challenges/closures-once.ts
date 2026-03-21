@@ -9,6 +9,12 @@ const challenge: Challenge = {
   skills: ['closures-scope'],
   content: {
     overview: `A classic closure pattern: store state (whether the function has been called, and its result) in the enclosing scope. The returned wrapper checks and updates that state on each call.`,
+    starterCode: `// once(fn) returns a new function that calls fn only the first time.
+// Subsequent calls return the first result without calling fn again.
+
+function once(fn) {
+  // your code here
+}`,
     solution: `function once(fn) {
   let called = false
   let result

@@ -9,6 +9,13 @@ const challenge: Challenge = {
   skills: ['dom-browser', 'performance'],
   content: {
     overview: `Lazy loading defers loading off-screen images until they're needed. The IntersectionObserver API does this efficiently — no scroll event listeners, no getBoundingClientRect() calls. It's how every modern image lazy loading library works.`,
+    starterCode: `// lazyLoad(images) observes each image element.
+// When an image enters the viewport, set its src from data-src
+// and stop observing it.
+
+function lazyLoad(images) {
+  // your code here
+}`,
     solution: `function lazyLoad(images) {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {

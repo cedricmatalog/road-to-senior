@@ -9,6 +9,13 @@ const challenge: Challenge = {
   skills: ['security'],
   content: {
     overview: `CSRF attacks trick a logged-in user's browser into making requests to your API. The defence: require a secret token known only to your frontend (not readable by third-party sites due to CORS). The token is included in form/API requests and validated server-side.`,
+    starterCode: `// validateRequest(req, session) returns true if the request is safe.
+// GET/HEAD/OPTIONS are always safe. Other methods must have a
+// req.headers['x-csrf-token'] matching session.csrfToken.
+
+function validateRequest(req, session) {
+  // your code here
+}`,
     solution: `function validateRequest(req, session) {
   const safeMethods = ['GET', 'HEAD', 'OPTIONS']
   if (safeMethods.includes(req.method)) return true

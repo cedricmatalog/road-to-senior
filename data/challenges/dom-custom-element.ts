@@ -9,6 +9,13 @@ const challenge: Challenge = {
   skills: ['dom-browser'],
   content: {
     overview: `Building a tooltip from scratch exercises core DOM skills: creating elements, positioning with getBoundingClientRect, attaching and removing event listeners, and managing element lifecycle (append/remove). The same patterns underpin every UI component library.`,
+    starterCode: `// createTooltip(target, text) attaches a tooltip to target element.
+// Shows on mouseenter, hides on mouseleave.
+// Returns { destroy() } to remove all listeners.
+
+function createTooltip(target, text) {
+  // your code here
+}`,
     solution: `function createTooltip(target, text) {
   let tooltip = null
 

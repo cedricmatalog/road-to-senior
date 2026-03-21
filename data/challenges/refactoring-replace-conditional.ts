@@ -9,6 +9,20 @@ const challenge: Challenge = {
   skills: ['refactoring'],
   content: {
     overview: `Long if/else chains that map one value to another are a code smell — they're verbose, hard to extend, and obscure the data. A lookup object (or Map) replaces branching logic with a data structure. Adding a new case is one line, not three.`,
+    starterCode: `// Replace the if/else chain with a lookup table.
+// getStatusMessage(code) returns the message for the HTTP status code,
+// or 'Unknown' for unrecognised codes.
+
+function getStatusMessage(code) {
+  if (code === 200) return 'OK'
+  else if (code === 201) return 'Created'
+  else if (code === 400) return 'Bad Request'
+  else if (code === 401) return 'Unauthorized'
+  else if (code === 403) return 'Forbidden'
+  else if (code === 404) return 'Not Found'
+  else if (code === 500) return 'Internal Server Error'
+  else return 'Unknown'
+}`,
     solution: `const STATUS_MESSAGES = {
   200: 'OK',
   201: 'Created',

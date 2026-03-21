@@ -9,6 +9,13 @@ const challenge: Challenge = {
   skills: ['dom-browser', 'performance'],
   content: {
     overview: `Rendering 10,000 DOM nodes is slow — virtual lists only render what's visible. The core math: given item height and scroll position, calculate which index range falls within the viewport. Libraries like react-window and TanStack Virtual do exactly this.`,
+    starterCode: `// getVisibleItems(items, scrollTop, viewportHeight, itemHeight)
+// returns only the items currently visible in the viewport.
+// Each returned item: { item, index, top }
+
+function getVisibleItems(items, scrollTop, viewportHeight, itemHeight) {
+  // your code here
+}`,
     solution: `function getVisibleItems(items, scrollTop, viewportHeight, itemHeight) {
   const startIndex = Math.floor(scrollTop / itemHeight)
   const endIndex = Math.min(

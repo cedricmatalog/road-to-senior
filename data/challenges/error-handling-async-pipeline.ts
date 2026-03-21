@@ -9,6 +9,14 @@ const challenge: Challenge = {
   skills: ['error-handling', 'async-js'],
   content: {
     overview: `Async pipelines need structured error handling — you need to know not just that something failed, but which step failed and why. Returning a result object instead of throwing lets callers handle failures without try/catch wrapping every call.`,
+    starterCode: `// runPipeline(steps, input) runs an array of async functions in sequence,
+// passing the output of each as the input to the next.
+// If any step throws, return { ok: false, error, step: index }.
+// On success return { ok: true, value }.
+
+async function runPipeline(steps, input) {
+  // your code here
+}`,
     solution: `async function runPipeline(steps, input) {
   let value = input
   for (let i = 0; i < steps.length; i++) {

@@ -9,6 +9,15 @@ const challenge: Challenge = {
   skills: ['closures-scope', 'architecture'],
   content: {
     overview: `Before private class fields existed, closures were the only way to create truly private state in JavaScript. The key: define the variable inside the factory function's scope — it's inaccessible from outside but visible to the returned methods.`,
+    starterCode: `// createAccount(initialBalance) returns an object with:
+// - deposit(amount) — adds to balance
+// - withdraw(amount) — subtracts from balance (no overdraft)
+// - getBalance() — returns current balance
+// Balance must not be directly accessible.
+
+function createAccount(initialBalance) {
+  // your code here
+}`,
     solution: `function createAccount(initialBalance) {
   let balance = initialBalance
   return {

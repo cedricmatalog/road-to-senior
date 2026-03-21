@@ -9,6 +9,17 @@ const challenge: Challenge = {
   skills: ['typescript'],
   content: {
     overview: `Discriminated unions use a shared literal field (the discriminant) to let TypeScript narrow a union type in switch/if blocks. The Result type pattern — borrowed from Rust and functional languages — makes error handling explicit and impossible to forget.`,
+    starterCode: `// ok(value) and err(error) create typed result objects.
+// ok  => { ok: true, value }
+// err => { ok: false, error }
+
+function ok(value) {
+  // your code here
+}
+
+function err(error) {
+  // your code here
+}`,
     solution: `function ok(value) { return { ok: true, value } }
 function err(error) { return { ok: false, error } }
 

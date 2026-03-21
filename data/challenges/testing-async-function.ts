@@ -9,6 +9,13 @@ const challenge: Challenge = {
   skills: ['testing', 'async-js'],
   content: {
     overview: `Testing async functions requires controlling their dependencies. By accepting the fetcher as a parameter, you can pass a stub that resolves instantly in tests — no real network, no flakiness, no test timeouts.`,
+    starterCode: `// getUserById(id, fetcher) fetches a user by ID.
+// Throws if id is falsy. Returns the parsed user object.
+// fetcher is an injected dependency: fetcher(url) => Promise<Response>
+
+async function getUserById(id, fetcher) {
+  // your code here
+}`,
     solution: `async function getUserById(id, fetcher) {
   if (!id) throw new Error('id is required')
   const response = await fetcher('/users/' + id)

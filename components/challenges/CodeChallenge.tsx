@@ -62,6 +62,10 @@ export function CodeChallenge({ content, onComplete, onAnswer }: CodeChallengePr
   }
 
   async function handleRun() {
+    if (!code?.trim()) {
+      setCompileError('Nothing to run — write some code first.')
+      return
+    }
     setLoading(true)
     setFetchError(false)
     setResults(null)

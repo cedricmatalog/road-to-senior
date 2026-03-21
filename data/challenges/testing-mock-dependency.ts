@@ -9,6 +9,13 @@ const challenge: Challenge = {
   skills: ['testing'],
   content: {
     overview: `Dependency injection makes functions testable without hitting real infrastructure. Instead of calling a real email service, the function accepts the sender as an argument — in tests you pass a fake, in production you pass the real one.`,
+    starterCode: `// sendWelcomeEmail(user, emailService) sends a welcome email via emailService.
+// Returns false if user has no email. Returns true on success.
+// emailService.send({ to, subject, body }) is the injected dependency.
+
+function sendWelcomeEmail(user, emailService) {
+  // your code here
+}`,
     solution: `function sendWelcomeEmail(user, emailService) {
   if (!user.email) return false
   emailService.send({

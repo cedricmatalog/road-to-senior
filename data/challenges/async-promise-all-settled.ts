@@ -9,6 +9,13 @@ const challenge: Challenge = {
   skills: ['async-js', 'promises-concurrency'],
   content: {
     overview: `Unlike \`Promise.all\` which rejects on first failure, \`allSettled\` always resolves with the outcome of every promise. Essential when you need results from all operations even if some fail — like fetching data from multiple sources in parallel.`,
+    starterCode: `// allSettled(promises) should return a Promise resolving to an array
+// of result objects regardless of success or failure.
+// { status: 'fulfilled', value } or { status: 'rejected', reason }
+
+function allSettled(promises) {
+  // your code here
+}`,
     solution: `function allSettled(promises) {
   return Promise.all(
     promises.map(p =>

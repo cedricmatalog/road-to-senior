@@ -9,6 +9,12 @@ const challenge: Challenge = {
   skills: ['testing', 'error-handling'],
   content: {
     overview: `Good testing reveals edge cases you didn't consider. This challenge flips it: given the test cases, implement the function. Boundaries — zero, negatives, floats, non-numbers — are where most bugs hide.`,
+    starterCode: `// validateAge(age) returns { valid: true } or { valid: false, error: string }.
+// Valid age: a finite number between 0 and 150 (inclusive).
+
+function validateAge(age) {
+  // your code here
+}`,
     solution: `function validateAge(age) {
   if (typeof age !== 'number' || !Number.isFinite(age)) {
     return { valid: false, error: 'Age must be a number' }

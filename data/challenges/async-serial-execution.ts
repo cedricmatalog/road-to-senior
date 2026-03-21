@@ -9,6 +9,13 @@ const challenge: Challenge = {
   skills: ['async-js', 'promises-concurrency'],
   content: {
     overview: `Sometimes you need async operations to run in strict sequence — each waiting for the previous to finish before starting. This is the async equivalent of a reduce, and it's how database migration runners and build pipelines work.`,
+    starterCode: `// runSerial(tasks) runs an array of async tasks one at a time (not in parallel).
+// Each task is a function that returns a Promise.
+// Return the result of the last task.
+
+async function runSerial(tasks) {
+  // your code here
+}`,
     solution: `async function runSerial(tasks) {
   let result
   for (const task of tasks) {

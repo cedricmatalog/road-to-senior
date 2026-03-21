@@ -9,6 +9,16 @@ const challenge: Challenge = {
   skills: ['typescript'],
   content: {
     overview: `Type guards are functions that return \`value is Type\` — they narrow the type inside an if-block. Essential for handling API responses typed as \`unknown\`, validating user input, or working with discriminated unions at runtime.`,
+    starterCode: `// isString(value) returns true if value is a string.
+// isApiResponse(value) returns true if value has a numeric status and string data.
+
+function isString(value) {
+  // your code here
+}
+
+function isApiResponse(value) {
+  // your code here
+}`,
     solution: `function isString(value) {
   return typeof value === 'string'
 }

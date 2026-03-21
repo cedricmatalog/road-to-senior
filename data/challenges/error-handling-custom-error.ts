@@ -9,6 +9,16 @@ const challenge: Challenge = {
   skills: ['error-handling'],
   content: {
     overview: `Custom error classes let callers distinguish error types with \`instanceof\` — essential for handling "user input was bad" differently from "record not found" differently from "network failed." Much cleaner than checking error message strings.`,
+    starterCode: `// Create a ValidationError class that extends Error with:
+// - message (from Error)
+// - field (which field failed)
+// - name === 'ValidationError'
+
+class ValidationError extends Error {
+  constructor(message, field) {
+    // your code here
+  }
+}`,
     solution: `class ValidationError extends Error {
   constructor(message, field) {
     super(message)

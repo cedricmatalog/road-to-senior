@@ -9,6 +9,12 @@ const challenge: Challenge = {
   skills: ['async-js', 'error-handling'],
   content: {
     overview: `\`Promise.race\` is the tool for "whichever settles first wins." Pairing a real promise with a timeout promise lets you add a deadline to any async operation — a fundamental pattern in network clients, API calls, and user-facing loading states.`,
+    starterCode: `// withTimeout(promise, ms) wraps a promise so it rejects if it doesn't
+// resolve within ms milliseconds.
+
+function withTimeout(promise, ms) {
+  // your code here
+}`,
     solution: `function withTimeout(promise, ms) {
   const timeout = new Promise((_, reject) =>
     setTimeout(() => reject(new Error('Timed out after ' + ms + 'ms')), ms)
