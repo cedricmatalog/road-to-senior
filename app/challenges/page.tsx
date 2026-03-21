@@ -1,4 +1,3 @@
-import { Suspense } from 'react'
 import { ALL_CHALLENGES } from '@/lib/challenges'
 import { ChallengeCard } from '@/components/challenges/ChallengeCard'
 import { ChallengeFilters } from '@/components/challenges/ChallengeFilters'
@@ -275,6 +274,61 @@ export default async function ChallengesPage({ searchParams }: PageProps) {
           .ch-page-header { padding: 48px 0 24px; }
         }
 
+        /* ── Filter bar ── */
+        .filter-bar {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+        .filter-row {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          overflow-x: auto;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        .filter-row::-webkit-scrollbar { display: none; }
+        .filter-pill:hover {
+          border-color: var(--border-hi) !important;
+          color: var(--text-dim) !important;
+          background: transparent !important;
+        }
+        .filter-pill[data-active="true"]:hover { opacity: 0.8; }
+        .filter-skill {
+          font-family: var(--mono);
+          font-size: 10px;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          padding: 5px 24px 5px 10px;
+          cursor: pointer;
+          border: 1px solid var(--border);
+          background: transparent;
+          color: var(--text-faint);
+          appearance: none;
+          -webkit-appearance: none;
+          outline: none;
+          transition: all 0.12s;
+          white-space: nowrap;
+          flex-shrink: 0;
+          line-height: 1;
+        }
+        .filter-skill:focus { border-color: var(--border-hi); }
+        @media (min-width: 640px) {
+          .filter-bar { flex-direction: row; gap: 0; align-items: center; }
+          .filter-row { overflow-x: visible; }
+          .filter-row + .filter-row::before {
+            content: '';
+            display: inline-block;
+            width: 1px;
+            height: 14px;
+            background: var(--border);
+            margin: 0 4px;
+            align-self: center;
+            flex-shrink: 0;
+          }
+        }
+
         /* Filter bar row */
         .ch-filter-row {
           border-bottom: 1px solid var(--border);
@@ -305,11 +359,14 @@ export default async function ChallengesPage({ searchParams }: PageProps) {
         </p>
       </div>
 
-      {/* Filter bar — full width, sticky, scrollable on mobile */}
+      {/* Filter bar — full width, sticky */}
       <div className="ch-filter-row">
-        <Suspense fallback={null}>
-          <ChallengeFilters />
-        </Suspense>
+        <ChallengeFilters
+          activeDiff={searchParams.difficulty ?? ''}
+          activeType={searchParams.type ?? ''}
+          activeSkill={searchParams.skill ?? ''}
+          hasFilters={isFiltered}
+        />
       </div>
 
       {challenges.length === 0 ? (
