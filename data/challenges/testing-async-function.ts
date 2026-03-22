@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'testing-async-function',
   title: 'Test an Async Data Fetcher',
-  description: 'Implement `getUserById` with proper async error handling, designed so it can be tested with stub fetchers.',
+  description: 'A data fetcher makes real HTTP calls, making it impossible to test without a network. Refactor it to accept the fetcher as a dependency so tests can stub it.',
   type: 'code',
   difficulty: 'mid',
   skills: ['testing', 'async-js'],

@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'typescript-overloads',
   title: 'Format a Value with Overloads',
-  description: 'Implement `format(value)` that formats numbers as currency and strings as title case — with correct return types for each input type.',
+  description: 'A formatting utility accepts either a number or a string but always returns `string`. Type it with overloads so callers get the right return type without a union.',
   type: 'code',
   difficulty: 'senior',
   skills: ['typescript'],

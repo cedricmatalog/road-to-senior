@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'closures-private-state',
   title: 'Private State with Closures',
-  description: 'Implement a bank account object where the balance can only be changed through deposit and withdraw — it cannot be accessed or set directly.',
+  description: 'A bank account balance keeps getting corrupted because code outside the module can set it directly. Encapsulate it so only deposit and withdraw can change it.',
   type: 'code',
   difficulty: 'mid',
   skills: ['closures-scope', 'architecture'],

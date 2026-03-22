@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'dom-intersection-observer',
   title: 'Lazy Load with IntersectionObserver',
-  description: 'Implement `lazyLoad(images)` — uses IntersectionObserver to load image src only when the image enters the viewport.',
+  description: 'A product page loads 50 full-size images on mount and takes 8 seconds on mobile. Only load each image when it scrolls into view.',
   type: 'code',
   difficulty: 'mid',
   skills: ['dom-browser', 'performance'],

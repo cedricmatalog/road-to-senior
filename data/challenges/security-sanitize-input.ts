@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'security-sanitize-input',
   title: 'Sanitize User Input Against XSS',
-  description: 'Implement a function that escapes HTML special characters to prevent cross-site scripting (XSS) when rendering user-supplied content.',
+  description: 'A comment field renders user input directly into the page. A tester just injected a script tag. Fix it by escaping HTML before rendering.',
   type: 'code',
   difficulty: 'mid',
   skills: ['security'],

@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'performance-lru-cache',
   title: 'Implement an LRU Cache',
-  description: 'Implement a Least Recently Used cache with `get(key)` and `set(key, value)` — evicts the least recently used entry when capacity is exceeded.',
+  description: 'A profile lookup hits the database on every request. You want to cache recent results but can\'t let memory grow unboundedly. Build a fixed-capacity cache that drops the least recently used entry.',
   type: 'code',
   difficulty: 'senior',
   skills: ['performance', 'architecture'],

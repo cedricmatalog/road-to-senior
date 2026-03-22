@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'dom-custom-element',
   title: 'Build a DOM Tooltip Component',
-  description: 'Implement `createTooltip(target, text)` — shows a tooltip element near the target on mouseenter, hides it on mouseleave, without any library.',
+  description: 'A design system needs a tooltip that appears on hover without pulling in a library. Wire up the show/hide behaviour and positioning in plain JS.',
   type: 'code',
   difficulty: 'mid',
   skills: ['dom-browser'],

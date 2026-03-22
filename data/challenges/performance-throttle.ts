@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'performance-throttle',
   title: 'Implement Throttle',
-  description: 'Implement `throttle(fn, wait)` — calls fn at most once per `wait` milliseconds, no matter how frequently it\'s invoked.',
+  description: 'A scroll handler fires hundreds of times per second and is tanking frame rate. Limit it to run at most once every 100ms regardless of how fast the user scrolls.',
   type: 'code',
   difficulty: 'mid',
   skills: ['performance'],

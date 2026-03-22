@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'typescript-discriminated-union',
   title: 'Type a Result Type with Discriminated Unions',
-  description: 'Implement a `Result<T, E>` type and a `match` function that handles both success and error cases exhaustively.',
+  description: 'An API call can succeed or fail. Model the response so callers are forced to handle both cases and TypeScript errors if they miss one.',
   type: 'code',
   difficulty: 'senior',
   skills: ['typescript'],

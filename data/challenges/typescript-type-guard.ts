@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'typescript-type-guard',
   title: 'Write Type Guards',
-  description: 'Implement type guard functions that let TypeScript narrow unknown API responses to known types.',
+  description: 'Your app receives JSON from an external API typed as `unknown`. Write type guards so TypeScript knows the shape before you use the data.',
   type: 'code',
   difficulty: 'mid',
   skills: ['typescript'],

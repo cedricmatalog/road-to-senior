@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'closures-once',
   title: 'Implement a Once Function',
-  description: 'Implement `once(fn)` — used to ensure initialization code (DB connections, config loads, analytics setup) runs exactly once no matter how many times it\'s called.',
+  description: 'Your analytics setup is being called multiple times on navigation, causing duplicate events. Wrap it so it only runs once no matter how many times it\'s invoked.',
   type: 'code',
   difficulty: 'junior',
   skills: ['closures-scope'],
