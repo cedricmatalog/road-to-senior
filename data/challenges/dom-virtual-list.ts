@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'dom-virtual-list',
   title: 'Implement getVisibleItems for a Virtual List',
-  description: 'Given a list of items with fixed height and a scroll position, return only the items that are currently visible in the viewport.',
+  description: 'A feed with 10,000 rows freezes the browser. Implement the visibility math that virtual list libraries use to only render what\'s on screen.',
   type: 'code',
   difficulty: 'senior',
   skills: ['dom-browser', 'performance'],

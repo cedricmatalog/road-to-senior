@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'architecture-pub-sub',
   title: 'Build a Typed Pub/Sub Store',
-  description: 'Implement a simple state store with `getState`, `setState`, and `subscribe` — like a minimal Redux or Zustand.',
+  description: 'Multiple UI components need to react to the same cart state changes without passing props through every layer. Build a minimal state store they can all subscribe to.',
   type: 'code',
   difficulty: 'mid',
   skills: ['architecture'],

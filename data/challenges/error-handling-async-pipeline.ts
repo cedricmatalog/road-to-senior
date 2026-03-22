@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'error-handling-async-pipeline',
   title: 'Error Boundaries in an Async Pipeline',
-  description: 'Implement `runPipeline(steps, input)` — runs async steps in sequence, stopping at the first error and returning `{ ok, result, failedAt }`.',
+  description: 'An order flow runs: validate → charge → fulfill → notify. When one step fails, you need to know exactly which step and why — not just that something went wrong.',
   type: 'code',
   difficulty: 'senior',
   skills: ['error-handling', 'async-js'],

@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'js-promises-basics',
   title: 'Fetch and Transform Data',
-  description: 'Write an async function that fetches data and transforms it before returning.',
+  description: 'A profile page needs to fetch a user and only display their name if they\'re an adult. Practice chaining async calls and handling the case where the fetch fails.',
   type: 'code',
   difficulty: 'junior',
   skills: ['javascript', 'async-js'],

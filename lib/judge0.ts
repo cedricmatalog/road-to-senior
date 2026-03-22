@@ -18,8 +18,8 @@ const assert = {
 const _linesBefore = _lines.length;
 try {
 ${tc.testCode}
-if (_lines.length === _linesBefore) console.log('PASS')
-} catch(e) { console.log('FAIL: ' + e.message) }
+if (_lines.length === _linesBefore) _lines.push('PASS')
+} catch(e) { _lines.push('FAIL: ' + e.message) }
 }`
     return wrapped
   }).join('\n')

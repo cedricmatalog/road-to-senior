@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'security-rate-limit-impl',
   title: 'Implement an In-Memory Rate Limiter',
-  description: 'Implement `createRateLimiter(limit, windowMs)` — returns a function that returns true if a client is within the rate limit, false if they\'ve exceeded it.',
+  description: 'A login endpoint is being brute-forced. Implement a rate limiter that caps how many requests a client can make per time window.',
   type: 'code',
   difficulty: 'mid',
   skills: ['security', 'performance'],

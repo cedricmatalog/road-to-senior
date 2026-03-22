@@ -2,8 +2,8 @@ import { describe, it, expect } from 'vitest'
 import { SKILL_AREAS, SKILL_SLUGS } from '@/lib/skills'
 
 describe('SKILL_AREAS', () => {
-  it('has exactly 17 entries', () => {
-    expect(Object.keys(SKILL_AREAS)).toHaveLength(17)
+  it('has exactly 26 entries', () => {
+    expect(Object.keys(SKILL_AREAS)).toHaveLength(26)
   })
 
   it('every entry has label and category', () => {

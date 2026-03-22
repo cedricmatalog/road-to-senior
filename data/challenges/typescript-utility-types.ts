@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'typescript-utility-types',
   title: 'Implement Readonly and Partial',
-  description: 'Implement your own `MyReadonly<T>` and `MyPartial<T>` utility types using mapped types.',
+  description: 'A teammate asks how `Readonly<T>` actually works under the hood. Build it yourself using mapped types to understand what TypeScript is doing.',
   type: 'code',
   difficulty: 'senior',
   skills: ['typescript'],

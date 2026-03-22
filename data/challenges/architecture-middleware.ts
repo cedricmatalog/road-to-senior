@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'architecture-middleware',
   title: 'Build a Middleware Pipeline',
-  description: 'Implement `compose(middlewares)` — chains middleware functions Express-style, where each calls `next()` to pass control to the next one.',
+  description: 'Your API needs auth, logging, and rate limiting on every route — without copy-pasting that logic into each handler. Build the middleware pipeline that runs them in sequence.',
   type: 'code',
   difficulty: 'senior',
   skills: ['architecture', 'closures-scope'],

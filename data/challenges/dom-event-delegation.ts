@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'dom-event-delegation',
   title: 'Implement Event Delegation',
-  description: 'Attach a single event listener to a parent element to handle clicks on dynamically added child elements — no direct listeners on children.',
+  description: 'A todo list adds items dynamically. Click handlers attached at creation leak memory and miss late-added items. Fix it with a single delegated listener on the parent.',
   type: 'code',
   difficulty: 'mid',
   skills: ['dom-browser', 'performance'],

@@ -124,6 +124,31 @@ import accessibilityFocusManagement from '@/data/challenges/accessibility-focus-
 import documentationAdr from '@/data/challenges/documentation-adr'
 import documentationRfc from '@/data/challenges/documentation-rfc'
 import documentationOnboarding from '@/data/challenges/documentation-onboarding'
+import toolingPeerDependencies from '@/data/challenges/tooling-peer-dependencies'
+import toolingDependencyTypes from '@/data/challenges/tooling-dependency-types'
+import toolingLockFiles from '@/data/challenges/tooling-lock-files'
+import juniorGitBasics from '@/data/challenges/junior-git-basics'
+import juniorOverwhelmed from '@/data/challenges/junior-overwhelmed'
+import juniorUnderstandingRequirements from '@/data/challenges/junior-understanding-requirements'
+import juniorPrTooBig from '@/data/challenges/junior-pr-too-big'
+import juniorProdBug from '@/data/challenges/junior-prod-bug'
+import juniorWritingTests from '@/data/challenges/junior-writing-tests'
+import juniorConsoleLogs from '@/data/challenges/junior-console-logs'
+import juniorCopyPasteCode from '@/data/challenges/junior-copy-paste-code'
+import juniorStandup from '@/data/challenges/junior-standup'
+import juniorNamingThings from '@/data/challenges/junior-naming-things'
+// Junior TypeScript code challenges
+import typescriptBasicAnnotations from '@/data/challenges/typescript-basic-annotations'
+import typescriptOptionalProperties from '@/data/challenges/typescript-optional-properties'
+import typescriptInterfaceVsType from '@/data/challenges/typescript-interface-vs-type'
+// Junior DOM code challenges
+import domQueryAndUpdate from '@/data/challenges/dom-query-and-update'
+import domEventsBasics from '@/data/challenges/dom-events-basics'
+import domCreateElements from '@/data/challenges/dom-create-elements'
+// Senior testing scenarios
+import testingIntegrationVsUnit from '@/data/challenges/testing-integration-vs-unit'
+import testingReactComponents from '@/data/challenges/testing-react-components'
+import testingWhatToTest from '@/data/challenges/testing-what-to-test'
 import type { Challenge } from '@/lib/types'
 
 export const ALL_CHALLENGES: Challenge[] = [
@@ -254,6 +279,33 @@ export const ALL_CHALLENGES: Challenge[] = [
   documentationAdr,
   documentationRfc,
   documentationOnboarding,
+  // Tooling
+  toolingPeerDependencies,
+  toolingDependencyTypes,
+  toolingLockFiles,
+  // More junior scenario challenges
+  juniorGitBasics,
+  juniorOverwhelmed,
+  juniorUnderstandingRequirements,
+  juniorPrTooBig,
+  juniorProdBug,
+  juniorWritingTests,
+  juniorConsoleLogs,
+  juniorCopyPasteCode,
+  juniorStandup,
+  juniorNamingThings,
+  // Junior TypeScript code challenges
+  typescriptBasicAnnotations,
+  typescriptOptionalProperties,
+  typescriptInterfaceVsType,
+  // Junior DOM code challenges
+  domQueryAndUpdate,
+  domEventsBasics,
+  domCreateElements,
+  // Senior testing scenarios
+  testingIntegrationVsUnit,
+  testingReactComponents,
+  testingWhatToTest,
 ]
 
 export function getChallengeBySlug(slug: string): Challenge | undefined {

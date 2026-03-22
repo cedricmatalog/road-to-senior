@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'architecture-event-emitter',
   title: 'Build an Event Emitter',
-  description: 'Implement a simple EventEmitter class with `on`, `off`, and `emit` methods — the foundation of Node.js event-driven architecture.',
+  description: 'A file upload module needs to notify other parts of the app when progress, completion, or errors happen — without them being directly coupled. Build the event system.',
   type: 'code',
   difficulty: 'mid',
   skills: ['architecture', 'closures-scope'],

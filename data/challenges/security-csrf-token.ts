@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'security-csrf-token',
   title: 'Implement CSRF Token Validation',
-  description: 'Implement `validateRequest(req)` — checks that state-changing requests include a valid CSRF token matching the session.',
+  description: 'A support ticket reports unauthorized transfers from user accounts. The attack is CSRF — malicious pages making requests on behalf of logged-in users. Add the server-side validation that stops it.',
   type: 'code',
   difficulty: 'mid',
   skills: ['security'],

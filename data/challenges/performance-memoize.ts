@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'performance-memoize',
   title: 'Implement Memoization',
-  description: 'Implement a `memoize` function that caches the results of expensive function calls and returns the cached result on repeated calls with the same arguments.',
+  description: 'A product page recalculates shipping cost on every render. The calculation is slow and the inputs rarely change. Cache the results so repeat calls are instant.',
   type: 'code',
   difficulty: 'mid',
   skills: ['performance', 'closures-scope'],

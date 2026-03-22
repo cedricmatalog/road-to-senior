@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'error-handling-custom-error',
   title: 'Create Custom Error Classes',
-  description: 'Implement `ValidationError` and `NotFoundError` that extend Error, so callers can distinguish error types with instanceof.',
+  description: 'Your API catches all errors the same way and returns 500 for everything. Create typed error classes so handlers can tell a bad request from a missing record.',
   type: 'code',
   difficulty: 'mid',
   skills: ['error-handling'],

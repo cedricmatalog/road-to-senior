@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'async-timeout-race',
   title: 'Add a Timeout to Any Promise',
-  description: 'Implement `withTimeout(promise, ms)` — rejects with a timeout error if the promise doesn\'t resolve within the given milliseconds.',
+  description: 'A third-party API occasionally hangs indefinitely. Wrap any promise so it rejects with a timeout error if it takes too long.',
   type: 'code',
   difficulty: 'mid',
   skills: ['async-js', 'error-handling'],

@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'typescript-generics',
   title: 'Type a Generic Pipeline Function',
-  description: 'Implement a `pipe` function that chains unary functions left-to-right, fully typed so the return type of each function is the input type of the next.',
+  description: 'Your data processing code chains transforms in sequence — parse, validate, format. Type it so TypeScript catches a mismatch between one step\'s output and the next step\'s input.',
   type: 'code',
   difficulty: 'senior',
   skills: ['typescript'],

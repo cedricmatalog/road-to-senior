@@ -40,6 +40,6 @@ describe('ScenarioChallenge', () => {
     render(<ScenarioChallenge content={content} onComplete={vi.fn()} />)
     fireEvent.click(screen.getByText('Approve and fix yourself'))
     expect(screen.getByText(/Misses teaching moment/)).toBeInTheDocument()
-    expect(screen.getByText(/Worth reconsidering/)).toBeInTheDocument()
+    expect(screen.getByText(/not ideal/i)).toBeInTheDocument()
   })
 })

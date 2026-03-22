@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'architecture-observable',
   title: 'Build a Simple Observable',
-  description: 'Implement a minimal Observable with `subscribe`, `next`, `error`, and `complete` — the pattern behind RxJS.',
+  description: 'A live data feed pushes multiple price updates over time — not a single response. Build a stream that can emit values, errors, and completion, then be cancelled.',
   type: 'code',
   difficulty: 'senior',
   skills: ['architecture', 'closures-scope'],

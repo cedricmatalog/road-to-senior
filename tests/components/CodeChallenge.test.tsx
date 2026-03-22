@@ -50,13 +50,13 @@ describe('CodeChallenge', () => {
     global.fetch = vi.fn().mockResolvedValue({ ok: false, status: 503 })
     render(<CodeChallenge content={content} onComplete={vi.fn()} />)
     fireEvent.click(screen.getByRole('button', { name: /run tests/i }))
-    await waitFor(() => expect(screen.getByText(/try again/i)).toBeInTheDocument())
+    await waitFor(() => expect(screen.getByText(/could not reach the runner/i)).toBeInTheDocument())
   })
 
   it('shows error message when fetch rejects (network error)', async () => {
     global.fetch = vi.fn().mockRejectedValue(new TypeError('Failed to fetch'))
     render(<CodeChallenge content={content} onComplete={vi.fn()} />)
     fireEvent.click(screen.getByRole('button', { name: /run tests/i }))
-    await waitFor(() => expect(screen.getByText(/try again/i)).toBeInTheDocument())
+    await waitFor(() => expect(screen.getByText(/could not reach the runner/i)).toBeInTheDocument())
   })
 })

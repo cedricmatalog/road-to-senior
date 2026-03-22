@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'error-handling-fetch',
   title: 'Robust Fetch with Error Handling',
-  description: 'Write a fetch wrapper that handles network errors, non-2xx responses, and JSON parse failures gracefully.',
+  description: 'Raw `fetch()` silently succeeds on 404s and 500s. Your app is showing blank screens instead of error states. Build a wrapper that surfaces every failure clearly.',
   type: 'code',
   difficulty: 'mid',
   skills: ['error-handling', 'async-js'],

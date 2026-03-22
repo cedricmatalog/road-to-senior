@@ -3,7 +3,7 @@ import type { Challenge } from '@/lib/types'
 const challenge: Challenge = {
   slug: 'performance-debounce',
   title: 'Implement Debounce',
-  description: 'Implement a `debounce` function that delays invoking a function until after a wait period has elapsed since the last call.',
+  description: 'Your search input fires an API call on every keystroke. Implement debounce so the call only fires when the user stops typing.',
   type: 'code',
   difficulty: 'mid',
   skills: ['performance'],
